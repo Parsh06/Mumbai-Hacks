@@ -1,0 +1,74 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#020617" />
+      <stop offset="40%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#0f766e" />
+    </linearGradient>
+    <linearGradient id="fs-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00F5A0" />
+      <stop offset="50%" stop-color="#00D9F5" />
+      <stop offset="100%" stop-color="#0066FF" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg-grad)" />
+  <circle cx="200" cy="120" r="220" fill="rgba(56,189,248,0.12)" />
+  <circle cx="1050" cy="520" r="260" fill="rgba(251,146,60,0.12)" />
+
+  <!-- Logo tile -->
+  <g transform="translate(140 180)">
+    <rect x="0" y="0" width="160" height="160" rx="36" fill="url(#fs-grad)" />
+    <path
+      d="M32 110L70 72L102 104L140 40"
+      fill="none"
+      stroke="#020617"
+      stroke-width="7"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <circle cx="70" cy="72" r="6" fill="#020617" />
+    <circle cx="102" cy="104" r="6" fill="#020617" />
+  </g>
+
+  <!-- Title -->
+  <g transform="translate(340 240)">
+    <text x="0" y="0" fill="#e5e7eb" font-family="Space Grotesk, system-ui, -apple-system, BlinkMacSystemFont, sans-serif"
+          font-size="56" font-weight="800" letter-spacing="0.12em">
+      FINSIGHT
+    </text>
+    <text x="0" y="64" fill="#e5e7eb" font-family="Space Grotesk, system-ui, -apple-system, BlinkMacSystemFont, sans-serif"
+          font-size="56" font-weight="800">
+      Ai
+    </text>
+  </g>
+
+  <!-- Subtitle -->
+  <text x="340" y="360" fill="#9ca3af"
+        font-family="Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="24" font-weight="500">
+    Agentic investment insights for bankers, traders &amp; deal teams.
+  </text>
+
+  <!-- Tagline chips -->
+  <g font-family="Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif"
+     font-size="16" font-weight="600">
+    <rect x="340" y="390" rx="999" width="210" height="40" fill="rgba(15,23,42,0.7)" stroke="#22c55e" stroke-width="1.5" />
+    <text x="360" y="416" fill="#bbf7d0">Realtime market intelligence</text>
+
+    <rect x="570" y="390" rx="999" width="230" height="40" fill="rgba(15,23,42,0.7)" stroke="#38bdf8" stroke-width="1.5" />
+    <text x="590" y="416" fill="#e0f2fe">AI‑assisted company research</text>
+
+    <rect x="830" y="390" rx="999" width="220" height="40" fill="rgba(15,23,42,0.7)" stroke="#f97316" stroke-width="1.5" />
+    <text x="850" y="416" fill="#ffedd5">Pitch‑ready comparisons</text>
+  </g>
+
+  <!-- Bottom disclaimer -->
+  <text x="140" y="540" fill="#6b7280"
+        font-family="Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="14" font-weight="500">
+    For research &amp; educational use only · Not investment advice.
+  </text>
+</svg>
+
+

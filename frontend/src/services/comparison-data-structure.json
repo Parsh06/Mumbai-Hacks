@@ -1,0 +1,254 @@
+{
+  "description": "",
+  "last_updated": "",
+  
+  "dataset_structure": {
+    "description": "",
+    "example": {
+      "generated_at": "",
+      "total_companies": 0,
+      "companies": []
+    }
+  },
+
+  "company_record_structure": {
+    "description": "",
+    "example": {
+      "company_code": "",
+      "url": "",
+      "name": "",
+      "about": "",
+      "pros": [],
+      "cons": [],
+      "key_ratios": [
+        {
+          "metric": "",
+          "value": ""
+        }
+      ],
+      "tables": {
+        "Quarterly Results": [
+          {
+            "": "",
+            "Mar 2022": "",
+            "Jun 2022": "",
+            "Sep 2022": "",
+            "Dec 2022": ""
+          }
+        ],
+        "Profit and Loss": [],
+        "Cash Flow": [],
+        "Balance Sheet": [],
+        "Ratios": []
+      },
+      "status": ""
+    }
+  },
+
+  "comparison_table_metrics": {
+    "description": "",
+    "metrics": [
+      {
+        "label": "",
+        "metric": "",
+        "source": ""
+      }
+    ]
+  },
+
+  "chart_data_structures": {
+    "sales_profit_trends": {
+      "chart_type": "",
+      "description": "",
+      "data_source": "",
+      "processing": {
+        "step1": "",
+        "step2": "",
+        "step3": "",
+        "step4": "",
+        "step5": ""
+      },
+      "output_structure": [
+        {
+          "quarter": "",
+          "RELIANCE Sales": 0,
+          "RELIANCE Net Profit": 0,
+          "TCS Sales": 0,
+          "TCS Net Profit": 0
+        }
+      ],
+      "chart_config": {
+        "x_axis": "",
+        "lines": [
+          {
+            "dataKey": "",
+            "stroke": "",
+            "strokeWidth": 0
+          }
+        ]
+      }
+    },
+
+    "profitability_comparison": {
+      "chart_type": "",
+      "description": "",
+      "data_source": "",
+      "metrics": [
+        {
+          "label": "",
+          "metric": "",
+          "type": "",
+          "parsing": ""
+        }
+      ],
+      "output_structure": [
+        {
+          "metric": "",
+          "left": 0,
+          "right": 0
+        }
+      ],
+      "chart_config": {
+        "x_axis": "",
+        "bars": [
+          {
+            "dataKey": "",
+            "name": "",
+            "fill": ""
+          }
+        ]
+      }
+    },
+
+    "valuation_ratios": {
+      "chart_type": "",
+      "description": "",
+      "data_source": "",
+      "metrics": [
+        {
+          "label": "",
+          "metric": "",
+          "type": "",
+          "parsing": ""
+        }
+      ],
+      "output_structure": [
+        {
+          "metric": "",
+          "left": 0,
+          "right": 0
+        }
+      ],
+      "chart_config": {
+        "x_axis": "",
+        "bars": [
+          {
+            "dataKey": "",
+            "name": "",
+            "fill": ""
+          }
+        ]
+      }
+    }
+  },
+
+  "sample_comparison_data": {
+    "description": "",
+    "company_a": {
+      "company_code": "",
+      "name": "",
+      "key_ratios": [
+        {
+          "metric": "",
+          "value": ""
+        }
+      ],
+      "tables": {
+        "Quarterly Results": [
+          {
+            "": "",
+            "Mar 2022": "",
+            "Jun 2022": "",
+            "Sep 2022": "",
+            "Dec 2022": ""
+          }
+        ]
+      }
+    },
+    "company_b": {
+      "company_code": "",
+      "name": "",
+      "key_ratios": [
+        {
+          "metric": "",
+          "value": ""
+        }
+      ],
+      "tables": {
+        "Quarterly Results": [
+          {
+            "": "",
+            "Mar 2022": "",
+            "Jun 2022": "",
+            "Sep 2022": "",
+            "Dec 2022": ""
+          }
+        ]
+      }
+    }
+  },
+
+  "data_parsing_rules": {
+    "number_parsing": {
+      "description": "",
+      "steps": [],
+      "examples": {
+        "input": "",
+        "output": 0
+      }
+    },
+    "percent_parsing": {
+      "description": "",
+      "steps": [],
+      "examples": {
+        "input": "",
+        "output": 0
+      }
+    }
+  },
+
+  "chart_configurations": {
+    "sales_profit": {
+      "id": "",
+      "label": "",
+      "description": "",
+      "chartType": ""
+    },
+    "profitability": {
+      "id": "",
+      "label": "",
+      "description": "",
+      "chartType": "",
+      "metrics": [
+        {
+          "label": "",
+          "metric": "",
+          "type": ""
+        }
+      ]
+    },
+    "valuation": {
+      "id": "",
+      "label": "",
+      "description": "",
+      "chartType": "",
+      "metrics": [
+        {
+          "label": "",
+          "metric": "",
+          "type": ""
+        }
+      ]
+    }
+  }
+}

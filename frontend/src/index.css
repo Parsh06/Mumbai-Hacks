@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Neo-noir palette for FinSight */
+    --background: 222 24% 7%;
+    --foreground: 0 0% 98%;
+
+    --card: 225 20% 12%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 225 20% 10%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 181 92% 52%;
+    --primary-foreground: 222 24% 8%;
+
+    --secondary: 268 78% 67%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 223 18% 18%;
+    --muted-foreground: 210 10% 72%;
+
+    --accent: 32 96% 60%;
+    --accent-foreground: 222 24% 8%;
+
+    --success: 150 70% 48%;
+    --success-foreground: 222 24% 8%;
+
+    --destructive: 0 85% 62%;
+    --destructive-foreground: 0 0% 100%;
+
+    --alert-high: 150 70% 48%;
+    --alert-low: 0 85% 62%;
+
+    --border: 223 22% 28%;
+    --input: 225 18% 16%;
+    --ring: 181 92% 52%;
+
+    --radius: 0.5rem;
+
+    --shadow-brutal: 4px 4px 0px 0px hsl(181 92% 52% / 0.35);
+    --shadow-brutal-lg: 6px 6px 0px 0px hsl(181 92% 52% / 0.45);
+    --shadow-glow: 0 0 25px hsl(181 92% 52% / 0.35);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(0, 255, 240, 0.08), transparent 55%),
+      radial-gradient(circle at 85% 0%, rgba(255, 125, 0, 0.08), transparent 45%),
+      linear-gradient(140deg, rgba(2, 6, 23, 0.95), rgba(5, 12, 30, 0.92));
+    background-attachment: fixed;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.04), transparent 45%),
+      radial-gradient(circle at 70% 10%, rgba(255, 255, 255, 0.03), transparent 35%);
+    pointer-events: none;
+    z-index: -1;
+  }
+}
+
+@layer components {
+  /* Neobrutalist Components */
+  .brutal-card {
+    @apply border-3 border-border bg-card rounded-lg shadow-[var(--shadow-brutal)];
+  }
+
+  .brutal-card-lg {
+    @apply border-4 border-border bg-card rounded-lg shadow-[var(--shadow-brutal-lg)];
+  }
+
+  .brutal-button {
+    @apply border-3 border-border font-bold rounded-md shadow-[var(--shadow-brutal)] 
+           transition-all duration-100 active:translate-x-1 active:translate-y-1 
+           active:shadow-none;
+  }
+
+  .brutal-input {
+    @apply border-3 border-border rounded-md bg-input px-4 py-2 font-medium
+           focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+  }
+}
+
+@layer utilities {
+  .border-3 {
+    border-width: 3px;
+  }
+
+  .border-4 {
+    border-width: 4px;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
