@@ -5,7 +5,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 import os
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 
 def clean_text(text):
     """Clean and normalize text content."""
@@ -112,10 +112,13 @@ def fetch_company_data(company_code, headers):
     return result
 
 # ---------------------------------------------------------------------------
-# Main execution
+# Main execution & paths
 # ---------------------------------------------------------------------------
 
-OUTPUT_DIR = os.path.dirname(os.path.abspath(__file__))
+# This script lives in scraper/scrapers-file.
+# We want to write output JSON into scraper/scraped-data/company.json.
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+OUTPUT_DIR = os.path.join(BASE_DIR, "scraped-data")
 OUTPUT_JSON = os.path.join(OUTPUT_DIR, "company.json")
 
 HEADERS = {
@@ -143,6 +146,9 @@ def main():
     print(f"🚀 Starting Screener Scraper for {MAX_COMPANIES} companies")
     print(f"{'='*80}\n")
 
+    # Ensure output directory exists
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+
     scraped_data = []
     total = 0
 
@@ -159,7 +165,7 @@ def main():
 
     # Save to JSON
     output_payload = {
-        "generated_at": datetime.utcnow().isoformat() + "Z",
+        "generated_at": datetime.now(timezone.utc).isoformat(),
         "total_companies": len(scraped_data),
         "companies": scraped_data,
     }

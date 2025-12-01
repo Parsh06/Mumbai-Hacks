@@ -23,8 +23,7 @@ export default function Layout({ children }: LayoutProps) {
     { to: "/dashboard", label: "Dashboard" },
     { to: "/companies", label: "Companies" },
     { to: "/compare", label: "Compare" },
-    { to: "/industries", label: "Industries" },
-    { to: "/docs", label: "Docs" },
+    { to: "/news", label: "Top News" },
   ];
 
   return (

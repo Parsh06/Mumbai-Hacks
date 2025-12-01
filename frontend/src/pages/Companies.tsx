@@ -1,11 +1,12 @@
-import { useMemo } from "react";
-import { Link } from "react-router-dom";
+import { useMemo, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import CompanySearch from "@/components/CompanySearch";
 import LoadingState from "@/components/LoadingState";
 import { useCompanyDataset } from "@/hooks/useCompanyDataset";
 
 export default function Companies() {
   const { data, isLoading, error } = useCompanyDataset();
+  const navigate = useNavigate();
 
   const companyOptions = useMemo(
     () =>
@@ -23,6 +24,13 @@ export default function Companies() {
         .slice(0, 12),
     [data]
   );
+
+  const [visibleCount, setVisibleCount] = useState(25);
+
+  const handleRowClick = (ticker: string) => {
+    if (!ticker) return;
+    navigate(`/company/${ticker}`);
+  };
 
   if (isLoading) {
     return <LoadingState label="Loading company intelligence..." />;
@@ -122,13 +130,22 @@ export default function Companies() {
         </div>
       </div>
 
-      <div className="brutal-card-lg p-6 overflow-x-auto">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
-          <h2 className="text-2xl font-bold">Full Coverage</h2>
-          <p className="text-sm text-muted-foreground">
-            {data.total_companies} companies · Click ticker to open detailed
-            dossier
-          </p>
+      <div className="brutal-card-lg p-6 overflow-x-auto space-y-4">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-2">
+          <div>
+            <h2 className="text-2xl font-bold">Full Coverage</h2>
+            <p className="text-sm text-muted-foreground">
+              {data.total_companies} companies · Click ticker to open detailed
+              dossier
+            </p>
+          </div>
+          <div className="text-xs text-muted-foreground font-medium">
+            Showing{" "}
+            <span className="font-semibold text-foreground">
+              {Math.min(visibleCount, data.total_companies)}
+            </span>{" "}
+            of {data.total_companies}
+          </div>
         </div>
         <table className="w-full text-sm">
           <thead>
@@ -142,18 +159,18 @@ export default function Companies() {
             </tr>
           </thead>
           <tbody>
-            {data.companies.map((company) => (
+            {data.companies.slice(0, visibleCount).map((company, idx) => (
               <tr
                 key={company.company_code}
-                className="border-b border-border/60 hover:bg-muted/30 transition-colors"
+                className={`border-b border-border/60 hover:bg-muted/30 transition-colors cursor-pointer ${
+                  idx % 2 === 0 ? "bg-background/40" : "bg-background/10"
+                }`}
+                onClick={() => handleRowClick(company.company_code)}
               >
                 <td className="py-3 pr-4 font-semibold">
-                  <Link
-                    to={`/company/${company.company_code}`}
-                    className="text-primary hover:underline"
-                  >
+                  <span className="text-primary underline decoration-dotted">
                     {company.company_code}
-                  </Link>
+                  </span>
                 </td>
                 <td className="py-3 pr-4">
                   <p className="font-semibold">
@@ -198,6 +215,21 @@ export default function Companies() {
             ))}
           </tbody>
         </table>
+        {visibleCount < data.total_companies && (
+          <div className="flex justify-center pt-4">
+            <button
+              type="button"
+              onClick={() =>
+                setVisibleCount((prev) =>
+                  Math.min(prev + 25, data.total_companies)
+                )
+              }
+              className="brutal-button px-6 py-3 bg-primary text-primary-foreground text-sm"
+            >
+              Load more companies
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

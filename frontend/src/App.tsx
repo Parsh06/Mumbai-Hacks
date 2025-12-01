@@ -11,9 +11,8 @@ import Auth from "@/pages/Auth";
 import Companies from "@/pages/Companies";
 import CompanyOverview from "@/pages/CompanyOverview";
 import CompareCompanies from "@/pages/CompareCompanies";
-import Industries from "@/pages/Industries";
-import Documentation from "@/pages/Documentation";
 import Dashboard from "@/pages/Dashboard";
+import TopNews from "@/pages/TopNews";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -41,8 +40,7 @@ const App = () => {
               <Route path="/companies" element={<Companies />} />
               <Route path="/company/:ticker" element={<CompanyOverview />} />
               <Route path="/compare" element={<CompareCompanies />} />
-              <Route path="/industries" element={<Industries />} />
-              <Route path="/docs" element={<Documentation />} />
+              <Route path="/news" element={<TopNews />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
