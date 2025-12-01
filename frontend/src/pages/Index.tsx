@@ -7,24 +7,53 @@ import {
   Zap,
   Shield,
   Sparkles,
+  Newspaper,
+  LayoutDashboard,
 } from "lucide-react";
 import CompanySearch from "@/components/CompanySearch";
 import { Button } from "@/components/ui/button";
 import { useCompanyDataset } from "@/hooks/useCompanyDataset";
 
 const DEFAULT_GAINERS = [
-  { ticker: "TCS", name: "Tata Consultancy Services", change: 5.2 },
-  { ticker: "INFY", name: "Infosys", change: 4.8 },
-  { ticker: "WIPRO", name: "Wipro", change: 3.6 },
+  { ticker: "TCS", name: "Tata Consultancy Services", change: 4.2 },
+  { ticker: "INFY", name: "Infosys", change: 3.8 },
+  { ticker: "WIPRO", name: "Wipro", change: 3.1 },
 ];
 
 const DEFAULT_LOSERS = [
-  { ticker: "ZOMATO", name: "Zomato", change: -3.8 },
-  { ticker: "PAYTM", name: "Paytm", change: -2.5 },
-  { ticker: "NYKAA", name: "FSN E-Commerce", change: -1.9 },
+  { ticker: "ZOMATO", name: "Zomato", change: -3.5 },
+  { ticker: "PAYTM", name: "Paytm", change: -2.7 },
+  { ticker: "NYKAA", name: "FSN E-Commerce", change: -2.1 },
 ];
 
 const RECENTLY_VIEWED_FALLBACK = ["RELIANCE", "HDFCBANK", "ICICIBANK"];
+
+const parseNumber = (value: string | undefined): number | null => {
+  if (!value) return null;
+  const cleaned = value.replace(/[^0-9.-]/g, "");
+  const num = parseFloat(cleaned);
+  return Number.isFinite(num) ? num : null;
+};
+
+const momentumScore = (company: CompanyRecord) => {
+  const highLow = getRatio("High / Low");
+  const current = parseNumber(getRatio("Current Price"));
+
+  function getRatio(metric: string) {
+    return (
+      company.key_ratios.find((ratio) => ratio.metric === metric)?.value ?? ""
+    );
+  }
+
+  if (!highLow || !current) return null;
+  const parts = highLow.split("/").map((part) => parseNumber(part));
+  if (parts.length !== 2) return null;
+  const [high, low] = parts;
+  if (high === null || low === null || high === low) return null;
+  const normalized = (current - low) / (high - low);
+  // convert to percentage momentum centered around zero
+  return Number(((normalized - 0.5) * 200).toFixed(1));
+};
 
 export default function Index() {
   const { data } = useCompanyDataset();
@@ -43,23 +72,69 @@ export default function Index() {
     return data.companies.slice(0, 3).map((company) => company.company_code);
   }, [data]);
 
+  const { topGainers, topLosers } = useMemo(() => {
+    if (!data) {
+      return { topGainers: DEFAULT_GAINERS, topLosers: DEFAULT_LOSERS };
+    }
+
+    const scored = data.companies
+      .map((company) => {
+        const change = momentumScore(company);
+        return {
+          ticker: company.company_code,
+          name: company.name || company.company_code,
+          change,
+        };
+      })
+      .filter((item) => item.change !== null) as Array<{
+      ticker: string;
+      name: string;
+      change: number;
+    }>;
+
+    if (scored.length < 3) {
+      return { topGainers: DEFAULT_GAINERS, topLosers: DEFAULT_LOSERS };
+    }
+
+    const gainers = [...scored]
+      .sort((a, b) => b.change - a.change)
+      .slice(0, 3)
+      .map((stock) => ({ ...stock, change: Number(stock.change.toFixed(1)) }));
+
+    const losers = [...scored]
+      .sort((a, b) => a.change - b.change)
+      .slice(0, 3)
+      .map((stock) => ({ ...stock, change: Number(stock.change.toFixed(1)) }));
+
+    return { topGainers: gainers, topLosers: losers };
+  }, [data]);
+
   const quickActions = [
     {
+      title: "Browse Companies",
+      description: "100 dossiers refreshed from company.json",
+      icon: TrendingUp,
+      to: "/companies",
+    },
+    {
       title: "Compare Companies",
-      description: "Side-by-side analysis",
+      description: "Deep dive side-by-side metrics",
       icon: BarChart3,
       to: "/compare",
     },
     {
-      title: "Explore Industries",
-      description: "Sector insights",
-      icon: TrendingUp,
-      to: "/industries",
+      title: "Top News Feed",
+      description: "Global headlines scraped into /news.json",
+      icon: Newspaper,
+      to: "/news",
+    },
+    {
+      title: "Mission Control",
+      description: "Dashboard insights & virtual portfolio",
+      icon: LayoutDashboard,
+      to: "/dashboard",
     },
   ];
-
-  const topGainers = DEFAULT_GAINERS;
-  const topLosers = DEFAULT_LOSERS;
 
   const heroBackdrop =
     "linear-gradient(120deg, rgba(2,6,23,0.85), rgba(8,47,73,0.85)), url('https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1800&q=80')";

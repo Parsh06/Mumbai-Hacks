@@ -1,8 +1,9 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CompanySearch from "@/components/CompanySearch";
 import LoadingState from "@/components/LoadingState";
 import { useCompanyDataset } from "@/hooks/useCompanyDataset";
+import type { CompanyRecord } from "@/services/companyDataService";
 
 export default function Companies() {
   const { data, isLoading, error } = useCompanyDataset();
@@ -26,11 +27,118 @@ export default function Companies() {
   );
 
   const [visibleCount, setVisibleCount] = useState(25);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+
+  const parseNumber = (value: string | undefined): number | null => {
+    if (!value) return null;
+    const cleaned = value.replace(/[^0-9.\-]/g, "");
+    const num = parseFloat(cleaned);
+    return Number.isFinite(num) ? num : null;
+  };
+
+  const parsePercent = (value: string | undefined): number | null => {
+    if (!value) return null;
+    const cleaned = value.replace("%", "");
+    const num = parseFloat(cleaned);
+    return Number.isFinite(num) ? num : null;
+  };
+
+  const getRatio = (company: CompanyRecord, metric: string): string | undefined => {
+    return company.key_ratios.find((r) => r.metric === metric)?.value;
+  };
+
+  const computeFactorScores = (company: CompanyRecord) => {
+    const pe = parseNumber(getRatio(company, "Stock P/E"));
+    const dy = parsePercent(getRatio(company, "Dividend Yield"));
+    const pb = parseNumber(getRatio(company, "Book Value"));
+    const roe = parsePercent(getRatio(company, "ROE"));
+    const roce = parsePercent(getRatio(company, "ROCE"));
+
+    // Value: low P/E, high dividend yield, low book value multiple
+    let value = 50;
+    if (pe !== null) {
+      if (pe < 15) value += 20;
+      else if (pe < 25) value += 10;
+      else if (pe > 40) value -= 10;
+    }
+    if (dy !== null) {
+      if (dy > 3) value += 20;
+      else if (dy > 1) value += 10;
+    }
+    if (pb !== null) {
+      if (pb < 2) value += 10;
+      else if (pb > 5) value -= 10;
+    }
+
+    // Quality: high ROE/ROCE
+    let quality = 50;
+    if (roe !== null) {
+      if (roe > 20) quality += 20;
+      else if (roe > 15) quality += 10;
+    }
+    if (roce !== null) {
+      if (roce > 20) quality += 20;
+      else if (roce > 15) quality += 10;
+    }
+
+    // Growth: approximate using ROE and dividend as a proxy
+    let growth = 50;
+    if (roe !== null) {
+      if (roe > 18) growth += 15;
+      else if (roe > 12) growth += 8;
+    }
+    if (dy !== null && dy < 1) {
+      // low payout can mean reinvestment
+      growth += 5;
+    }
+
+    const clamp = (v: number) => Math.max(0, Math.min(100, v));
+
+    return {
+      value: clamp(value),
+      quality: clamp(quality),
+      growth: clamp(growth),
+    };
+  };
+
+  const factorColor = (score: number) => {
+    if (score >= 70) return "bg-emerald-500";
+    if (score >= 40) return "bg-amber-400";
+    return "bg-rose-500";
+  };
 
   const handleRowClick = (ticker: string) => {
     if (!ticker) return;
     navigate(`/company/${ticker}`);
   };
+
+  // Infinite scroll for Full Coverage table
+  useEffect(() => {
+    if (!loadMoreRef.current) return;
+    if (!data) return;
+    if (visibleCount >= data.total_companies) return;
+
+    const target = loadMoreRef.current;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting) {
+          setVisibleCount((prev) =>
+            Math.min(prev + 25, data.total_companies)
+          );
+        }
+      },
+      { rootMargin: "200px" }
+    );
+
+    observer.observe(target);
+
+    return () => {
+      observer.unobserve(target);
+      observer.disconnect();
+    };
+  }, [data, visibleCount]);
 
   if (isLoading) {
     return <LoadingState label="Loading company intelligence..." />;
@@ -155,6 +263,7 @@ export default function Companies() {
               <th className="py-3 pr-4">Pros</th>
               <th className="py-3 pr-4">Cons</th>
               <th className="py-3 pr-4">Key Ratio</th>
+              <th className="py-3 pr-4">Factors</th>
               <th className="py-3">Status</th>
             </tr>
           </thead>
@@ -200,6 +309,52 @@ export default function Companies() {
                     <span className="text-muted-foreground text-xs">—</span>
                   )}
                 </td>
+                <td className="py-3 pr-4">
+                  {company.key_ratios.length > 0 ? (
+                    (() => {
+                      const scores = computeFactorScores(company as CompanyRecord);
+                      return (
+                        <div className="flex items-center gap-2 text-[10px]">
+                          <div className="flex items-center gap-1">
+                            <span
+                              className={`w-2.5 h-2.5 rounded-full ${factorColor(
+                                scores.value
+                              )}`}
+                              title={`Value score ${scores.value.toFixed(0)}`}
+                            />
+                            <span className="uppercase text-muted-foreground">
+                              V
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <span
+                              className={`w-2.5 h-2.5 rounded-full ${factorColor(
+                                scores.quality
+                              )}`}
+                              title={`Quality score ${scores.quality.toFixed(0)}`}
+                            />
+                            <span className="uppercase text-muted-foreground">
+                              Q
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <span
+                              className={`w-2.5 h-2.5 rounded-full ${factorColor(
+                                scores.growth
+                              )}`}
+                              title={`Growth score ${scores.growth.toFixed(0)}`}
+                            />
+                            <span className="uppercase text-muted-foreground">
+                              G
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })()
+                  ) : (
+                    <span className="text-muted-foreground text-xs">—</span>
+                  )}
+                </td>
                 <td className="py-3">
                   <span
                     className={`text-xs font-semibold px-3 py-1 rounded-full ${
@@ -216,19 +371,7 @@ export default function Companies() {
           </tbody>
         </table>
         {visibleCount < data.total_companies && (
-          <div className="flex justify-center pt-4">
-            <button
-              type="button"
-              onClick={() =>
-                setVisibleCount((prev) =>
-                  Math.min(prev + 25, data.total_companies)
-                )
-              }
-              className="brutal-button px-6 py-3 bg-primary text-primary-foreground text-sm"
-            >
-              Load more companies
-            </button>
-          </div>
+          <div ref={loadMoreRef} className="h-10 w-full" />
         )}
       </div>
     </div>

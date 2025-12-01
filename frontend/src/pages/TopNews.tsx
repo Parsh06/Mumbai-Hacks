@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { ArrowUpRight, Globe2, Newspaper, Clock } from "lucide-react";
 import LoadingState from "@/components/LoadingState";
 
@@ -32,6 +32,8 @@ export default function TopNews() {
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [searchParams] = useSearchParams();
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -75,14 +77,67 @@ export default function TopNews() {
     };
   }, []);
 
+  const sourceFilter = (searchParams.get("source") || "").toLowerCase();
+  const companyFilter = (searchParams.get("company") || "").toLowerCase();
+
+  const filteredArticles = useMemo(() => {
+    if (!sourceFilter && !companyFilter) return articles;
+
+    return articles.filter((article) => {
+      const sourceOk =
+        !sourceFilter ||
+        (article.source && article.source.toLowerCase().includes(sourceFilter));
+
+      const haystack = (
+        article.title +
+        " " +
+        (article.description || "") +
+        " " +
+        (article.content || "")
+      ).toLowerCase();
+
+      const companyOk =
+        !companyFilter || haystack.includes(companyFilter.toLowerCase());
+
+      return sourceOk && companyOk;
+    });
+  }, [articles, sourceFilter, companyFilter]);
+
   const visibleArticles = useMemo(() => {
-    const sorted = [...articles].sort(
+    const sorted = [...filteredArticles].sort(
       (a, b) => parseArticleDate(b) - parseArticleDate(a)
     );
     return sorted.slice(0, visibleCount);
-  }, [articles, visibleCount]);
+  }, [filteredArticles, visibleCount]);
 
-  const hasMore = visibleCount < articles.length;
+  const hasMore = visibleCount < filteredArticles.length;
+
+  // Infinite scroll using IntersectionObserver
+  useEffect(() => {
+    if (!loadMoreRef.current) return;
+    if (!hasMore || isLoading) return;
+
+    const target = loadMoreRef.current;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting) {
+          setVisibleCount((prev) =>
+            Math.min(prev + PAGE_SIZE, filteredArticles.length)
+          );
+        }
+      },
+      { rootMargin: "200px" }
+    );
+
+    observer.observe(target);
+
+    return () => {
+      observer.unobserve(target);
+      observer.disconnect();
+    };
+  }, [hasMore, isLoading, filteredArticles.length]);
 
   if (isLoading && articles.length === 0) {
     return <LoadingState label="Loading top news..." />;
@@ -146,7 +201,7 @@ export default function TopNews() {
               Top Stories
             </h2>
             <p className="text-sm text-muted-foreground">
-              Showing {visibleArticles.length} of {articles.length} articles
+              Showing {visibleArticles.length} of {filteredArticles.length} articles
             </p>
           </div>
         </div>
@@ -214,17 +269,7 @@ export default function TopNews() {
         </div>
 
         {hasMore && (
-          <div className="flex justify-center pt-4">
-            <button
-              type="button"
-              onClick={() =>
-                setVisibleCount((prev) => Math.min(prev + PAGE_SIZE, articles.length))
-              }
-              className="brutal-button px-6 py-3 bg-primary text-primary-foreground text-sm"
-            >
-              Load more stories
-            </button>
-          </div>
+          <div ref={loadMoreRef} className="h-10 w-full" />
         )}
       </section>
     </div>

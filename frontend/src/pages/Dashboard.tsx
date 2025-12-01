@@ -1,16 +1,26 @@
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpRight, BellRing, Brain, Download, Shield, Sparkles, TrendingUp, AlertTriangle } from "lucide-react";
+import {
+  ArrowUpRight,
+  BellRing,
+  Brain,
+  Download,
+  Shield,
+  Sparkles,
+  AlertTriangle,
+  Newspaper,
+  BarChart3,
+  Bolt,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ResponsiveContainer, AreaChart, Area, XAxis, Tooltip, LineChart, Line } from "recharts";
+import { ResponsiveContainer, LineChart, Line, XAxis, Tooltip } from "recharts";
 import { useCompanyDataset } from "@/hooks/useCompanyDataset";
 import LoadingState from "@/components/LoadingState";
 import { type CompanyRecord } from "@/services/companyDataService";
 
-// Helper functions
 const parseNumber = (value: string | undefined): number | null => {
   if (!value) return null;
-  const cleaned = value.replace(/[^0-9.\-]/g, "");
+  const cleaned = value.replace(/[^0-9.-]/g, "");
   const num = parseFloat(cleaned);
   return Number.isFinite(num) ? num : null;
 };
@@ -22,10 +32,10 @@ const parsePercent = (value: string | undefined): number | null => {
   return Number.isFinite(num) ? num : null;
 };
 
-const getMetricValue = (company: CompanyRecord, metric: string): string | undefined => {
-  const ratio = company.key_ratios?.find((r) => r.metric === metric);
-  return ratio?.value;
-};
+const getMetricValue = (
+  company: CompanyRecord,
+  metric: string
+) => company.key_ratios?.find((r) => r.metric === metric)?.value;
 
 const formatMarketCap = (value: number): string => {
   if (value >= 100000) return `₹${(value / 100000).toFixed(1)}L Cr`;
@@ -39,16 +49,15 @@ export default function Dashboard() {
   const dashboardData = useMemo(() => {
     if (!data) return null;
 
-    const successfulCompanies = data.companies.filter((c) => c.status === "success");
+    const companies = data.companies.filter((c) => c.status === "success");
 
-    // Calculate KPIs
     let totalMarketCap = 0;
     let highROECompanies = 0;
     let highROCECompanies = 0;
     let positiveSignalCompanies = 0;
     let companiesWithAlerts = 0;
 
-    successfulCompanies.forEach((company) => {
+    companies.forEach((company) => {
       const marketCap = parseNumber(getMetricValue(company, "Market Cap"));
       if (marketCap) totalMarketCap += marketCap;
 
@@ -64,8 +73,7 @@ export default function Dashboard() {
       if (consCount > 3) companiesWithAlerts++;
     });
 
-    // Top companies by Market Cap for watchlist
-    const topCompanies = successfulCompanies
+    const watchlist = companies
       .map((company) => {
         const marketCap = parseNumber(getMetricValue(company, "Market Cap"));
         const currentPrice = getMetricValue(company, "Current Price");
@@ -73,7 +81,6 @@ export default function Dashboard() {
         const prosCount = company.pros?.length || 0;
         const consCount = company.cons?.length || 0;
 
-        // Calculate change from High/Low
         let change = "0%";
         let changeValue = 0;
         if (highLow) {
@@ -91,7 +98,6 @@ export default function Dashboard() {
           }
         }
 
-        // Determine signal based on pros/cons
         let signal = "Hold";
         if (prosCount > consCount + 2) signal = "Strong Buy";
         else if (prosCount > consCount) signal = "Buy";
@@ -106,115 +112,73 @@ export default function Dashboard() {
           changeValue,
           signal,
           marketCap: marketCap || 0,
-          prosCount,
-          consCount,
         };
       })
-      .filter((c) => c.marketCap > 0)
+      .filter((item) => item.marketCap > 0)
       .sort((a, b) => b.marketCap - a.marketCap)
       .slice(0, 5);
 
-    // Portfolio trend from quarterly results (aggregate top 5 companies)
-    const top5 = topCompanies.slice(0, 5);
-    const quarters = new Set<string>();
-
-    top5.forEach((item) => {
-      const company = successfulCompanies.find((c) => c.company_code === item.ticker);
-      if (company?.tables?.["Quarterly Results"]) {
-        const qr = company.tables["Quarterly Results"];
-        const firstRow = qr[0];
-        if (firstRow) {
-          Object.keys(firstRow).forEach((key) => {
-            if (key !== "" && key.match(/[A-Za-z]{3} \d{4}/)) {
-              quarters.add(key);
-            }
-          });
-        }
-      }
-    });
-
-    const sortedQuarters = Array.from(quarters).sort().slice(-5);
-    const portfolioTrend = sortedQuarters.map((quarter) => {
-      let totalSales = 0;
-      let count = 0;
-
-      top5.forEach((item) => {
-        const company = successfulCompanies.find((c) => c.company_code === item.ticker);
-        if (company?.tables?.["Quarterly Results"]) {
-          const qr = company.tables["Quarterly Results"];
-          const salesRow = qr.find((row) => row[""] === "Sales +");
-          if (salesRow && salesRow[quarter]) {
-            const sales = parseNumber(salesRow[quarter]);
-            if (sales) {
-              totalSales += sales;
-              count++;
-            }
-          }
-        }
-      });
-
-      return {
-        label: quarter,
-        value: count > 0 ? totalSales / count / 1000 : 0, // Normalize to thousands
-      };
-    });
-
-    // Risk alerts (companies with many cons)
-    const riskAlerts = successfulCompanies
+    const riskAlerts = companies
       .filter((c) => (c.cons?.length || 0) > 3)
       .slice(0, 3)
       .map((company) => ({
         title: `${company.company_code} Risk Alert`,
-        description: `${company.cons?.length || 0} concerns identified. ${company.cons?.[0] || "Review required"}`,
+        description: `${company.cons?.length || 0} concerns identified. ${
+          company.cons?.[0] || "Review required"
+        }`,
         status: "Alert",
         ticker: company.company_code,
       }));
 
-    // Opportunity signals (companies with strong pros)
-    const opportunities = successfulCompanies
+    const opportunities = companies
       .filter((c) => (c.pros?.length || 0) > (c.cons?.length || 0) + 1)
       .slice(0, 2)
       .map((company) => ({
         title: `${company.company_code} Opportunity`,
-        description: `${company.pros?.length || 0} positive factors. ${company.pros?.[0] || "Strong fundamentals"}`,
+        description: `${company.pros?.length || 0} positive factors. ${
+          company.pros?.[0] || "Strong fundamentals"
+        }`,
         status: "Active",
         ticker: company.company_code,
       }));
 
-    // Next best actions
     const actions: string[] = [];
-
-    // High ROE companies
-    const highROE = successfulCompanies
+    const highROE = companies
       .filter((c) => {
         const roe = parsePercent(getMetricValue(c, "ROE"));
         return roe && roe > 20;
       })
       .slice(0, 2);
     if (highROE.length > 0) {
-      actions.push(`Review ${highROE.map((c) => c.company_code).join(", ")} - High ROE (>20%) indicates strong profitability.`);
+      actions.push(
+        `Review ${highROE.map((c) => c.company_code).join(
+          ", "
+        )} - ROE above 20% indicates strong profitability.`
+      );
     }
 
-    // Low P/E companies
-    const lowPE = successfulCompanies
+    const lowPE = companies
       .filter((c) => {
         const pe = parseNumber(getMetricValue(c, "Stock P/E"));
         return pe && pe > 0 && pe < 20;
       })
       .slice(0, 1);
     if (lowPE.length > 0) {
-      actions.push(`Consider ${lowPE[0].company_code} - Low P/E ratio suggests potential value opportunity.`);
+      actions.push(
+        `Consider ${lowPE[0].company_code} - low valuation could be an entry point.`
+      );
     }
 
-    // High dividend yield
-    const highDividend = successfulCompanies
+    const highDividend = companies
       .filter((c) => {
         const div = parsePercent(getMetricValue(c, "Dividend Yield"));
         return div && div > 2;
       })
       .slice(0, 1);
     if (highDividend.length > 0) {
-      actions.push(`Evaluate ${highDividend[0].company_code} - High dividend yield (>2%) for income-focused portfolios.`);
+      actions.push(
+        `Evaluate ${highDividend[0].company_code} - dividend yield above 2% suits income mandates.`
+      );
     }
 
     const nextActions = actions.slice(0, 3);
@@ -227,12 +191,23 @@ export default function Dashboard() {
         positiveSignals: positiveSignalCompanies,
         alerts: companiesWithAlerts,
       },
-      watchlist: topCompanies,
-      portfolioTrend,
+      watchlist,
       automations: [...opportunities, ...riskAlerts].slice(0, 3),
       nextActions,
     };
   }, [data]);
+
+  const trendSeries = useMemo(() => {
+    if (!dashboardData) return [];
+    const avgChange =
+      dashboardData.watchlist.reduce((sum, w) => sum + (w.changeValue || 0), 0) /
+      (dashboardData.watchlist.length || 1);
+    const base = 100;
+    return Array.from({ length: 6 }).map((_, idx) => ({
+      label: `T-${5 - idx}`,
+      value: Math.max(0, base + avgChange * (idx - 3)),
+    }));
+  }, [dashboardData]);
 
   if (isLoading) {
     return <LoadingState label="Loading dashboard data..." />;
@@ -252,6 +227,7 @@ export default function Dashboard() {
       </div>
     );
   }
+
   return (
     <div className="container mx-auto px-4 py-10 space-y-10">
       <section
@@ -271,8 +247,8 @@ export default function Dashboard() {
             <span className="text-primary">FinSightAi</span> power users.
           </h1>
           <p className="text-muted-foreground text-lg font-medium">
-            Monitor mandates, automate alerts, and collaborate with AI agents that work the way
-            you do.
+            Monitor mandates, automate alerts, and collaborate with AI agents
+            that work the way you do.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link to="/companies">
@@ -292,71 +268,50 @@ export default function Dashboard() {
 
       <section className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { 
-            label: "Companies Tracked", 
-            value: dashboardData.kpis.totalCompanies.toString(), 
-            sub: `Last updated: ${new Date(data.generated_at).toLocaleDateString()}` 
+          {
+            label: "Companies Tracked",
+            value: dashboardData.kpis.totalCompanies.toString(),
+            sub: `Last updated: ${new Date(
+              data.generated_at
+            ).toLocaleDateString()}`,
           },
-          { 
-            label: "Total Market Cap", 
-            value: dashboardData.kpis.totalMarketCap, 
-            sub: `${dashboardData.kpis.highPerformingCompanies} high performers` 
+          {
+            label: "Total Market Cap",
+            value: dashboardData.kpis.totalMarketCap,
+            sub: `${dashboardData.kpis.highPerformingCompanies} high performers`,
           },
-          { 
-            label: "Positive Signals", 
-            value: dashboardData.kpis.positiveSignals.toString(), 
-            sub: "Companies with strong fundamentals" 
+          {
+            label: "Positive Signals",
+            value: dashboardData.kpis.positiveSignals.toString(),
+            sub: "Companies with strong fundamentals",
           },
-          { 
-            label: "Risk Alerts", 
-            value: dashboardData.kpis.alerts.toString(), 
-            sub: "Require attention" 
+          {
+            label: "Risk Alerts",
+            value: dashboardData.kpis.alerts.toString(),
+            sub: "Require attention",
           },
         ].map((metric) => (
-          <div key={metric.label} className="brutal-card p-5 bg-gradient-to-br from-card to-primary/5">
-            <p className="text-sm font-semibold text-muted-foreground">{metric.label}</p>
+          <div
+            key={metric.label}
+            className="brutal-card p-5 bg-gradient-to-br from-card to-primary/5"
+          >
+            <p className="text-sm font-semibold text-muted-foreground">
+              {metric.label}
+            </p>
             <p className="text-3xl font-bold">{metric.value}</p>
             <p className="text-xs font-semibold text-success">{metric.sub}</p>
           </div>
         ))}
       </section>
 
-      <section className="grid lg:grid-cols-3 gap-8">
-        <div className="brutal-card-lg p-6 lg:col-span-2">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-2xl font-bold">Portfolio Pulse</h2>
-            <span className="text-xs font-semibold text-muted-foreground uppercase tracking-[0.35em]">
-              Real-time
-            </span>
-          </div>
-          <ResponsiveContainer width="100%" height={260}>
-            <AreaChart data={dashboardData.portfolioTrend}>
-              <defs>
-                <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <XAxis dataKey="label" stroke="hsl(var(--muted-foreground))" tick={{ fontSize: 10 }} angle={-20} textAnchor="end" height={60} />
-              <Tooltip contentStyle={{ background: "rgba(15,23,42,0.9)", borderRadius: 12 }} />
-              <Area
-                type="monotone"
-                dataKey="value"
-                stroke="hsl(var(--primary))"
-                fillOpacity={1}
-                fill="url(#colorValue)"
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
-
+      <section className="grid lg:grid-cols-2 gap-8">
         <div className="brutal-card-lg p-6 space-y-4">
           <div className="flex items-center gap-3">
             <BellRing className="w-6 h-6 text-secondary" />
             <div>
               <p className="text-lg font-bold">Signal Inbox</p>
               <p className="text-sm text-muted-foreground font-medium">
-                3 priority triggers awaiting review
+                Curated opportunities & alerts
               </p>
             </div>
           </div>
@@ -372,8 +327,16 @@ export default function Dashboard() {
                     )}
                     {item.title}
                   </p>
-                  <p className="text-sm text-muted-foreground">{item.description}</p>
-                  <p className={`text-xs font-bold mt-2 ${item.status === "Alert" ? "text-destructive" : "text-success"}`}>
+                  <p className="text-sm text-muted-foreground">
+                    {item.description}
+                  </p>
+                  <p
+                    className={`text-xs font-bold mt-2 ${
+                      item.status === "Alert"
+                        ? "text-destructive"
+                        : "text-success"
+                    }`}
+                  >
                     {item.status}
                   </p>
                 </div>
@@ -381,12 +344,43 @@ export default function Dashboard() {
             ))}
           </div>
         </div>
+
+        <div className="brutal-card-lg p-6 space-y-4 bg-gradient-to-br from-card to-primary/10">
+          <div className="flex items-center justify-between gap-2">
+            <h2 className="text-xl font-bold flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-primary" />
+              AI Trendline
+            </h2>
+            <span className="text-xs text-muted-foreground uppercase tracking-[0.3em]">
+              Synthetic view
+            </span>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Quick glance at watchlist momentum. For full fundamentals jump to
+            Companies or Compare pages.
+          </p>
+          <div className="h-40">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={trendSeries}>
+                <XAxis dataKey="label" tick={{ fontSize: 10 }} />
+                <Tooltip />
+                <Line
+                  type="monotone"
+                  dataKey="value"
+                  stroke="hsl(var(--primary))"
+                  strokeWidth={3}
+                  dot={{ r: 3 }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
       </section>
 
       <section className="grid lg:grid-cols-2 gap-8">
-        <div className="brutal-card-lg p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold flex items-center gap-2">
+        <div className="brutal-card-lg p-6 space-y-4">
+          <div className="flex items-center justify-between mb-2">
+            <h2 className="text-xl font-bold flex items=center gap-2">
               <Brain className="w-5 h-5 text-primary" />
               AI Watchlist
             </h2>
@@ -399,14 +393,21 @@ export default function Dashboard() {
                   <div>
                     <p className="text-lg font-bold">{item.ticker}</p>
                     <p className="text-sm text-muted-foreground">{item.name}</p>
-                    <p className="text-xs text-muted-foreground mt-1">{item.price}</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {item.price}
+                    </p>
                   </div>
                   <div className="text-right">
                     <p className={cnText(item.change)}>{item.change}</p>
-                    <p className={`text-xs font-semibold uppercase tracking-wide ${
-                      item.signal === "Strong Buy" || item.signal === "Buy" ? "text-success" :
-                      item.signal === "Sell" ? "text-destructive" : "text-primary"
-                    }`}>
+                    <p
+                      className={`text-xs font-semibold uppercase tracking-wide ${
+                        item.signal === "Strong Buy" || item.signal === "Buy"
+                          ? "text-success"
+                          : item.signal === "Sell"
+                          ? "text-destructive"
+                          : "text-primary"
+                      }`}
+                    >
                       {item.signal}
                     </p>
                   </div>
@@ -416,25 +417,124 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="brutal-card-lg p-6 space-y-4">
-          <h2 className="text-xl font-bold">Next best actions</h2>
-          <ul className="space-y-3 text-sm font-medium">
+        <div className="brutal-card-lg p-6 space-y-4 bg-gradient-to-br from-card to-secondary/10">
+          <p className="text-xs uppercase tracking-[0.4em] text-muted-foreground">
+            Quick navigation
+          </p>
+          <div className="space-y-3">
+            {[
+              {
+                to: "/companies",
+                label: "Browse Companies",
+                desc: "100 dossiers refreshed daily",
+                icon: BarChart3,
+              },
+              {
+                to: "/compare",
+                label: "Compare Companies",
+                desc: "Side-by-side analysis cockpit",
+                icon: ArrowUpRight,
+              },
+              {
+                to: "/news",
+                label: "Top News Feed",
+                desc: "Latest scraped headlines",
+                icon: Newspaper,
+              },
+            ].map((link) => (
+              <Link
+                to={link.to}
+                key={link.to}
+                className="flex items-center justify-between p-3 rounded-xl border border-border hover:bg-muted/40 transition"
+              >
+                <div>
+                  <p className="font-semibold flex items-center gap-2">
+                    <link.icon className="w-4 h-4 text-primary" />
+                    {link.label}
+                  </p>
+                  <p className="text-xs text-muted-foreground">{link.desc}</p>
+                </div>
+                <ArrowUpRight className="w-4 h-4 text-muted-foreground" />
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="grid lg:grid-cols-3 gap-8">
+        <div className="brutal-card-lg p-6 space-y-3 bg-gradient-to-br from-card to_primary/5">
+          <p className="text-xs uppercase tracking-[0.4em] text-muted-foreground">
+            Dataset coverage
+          </p>
+          <h3 className="text-2xl font-bold">
+            {dashboardData.kpis.totalCompanies} companies live
+          </h3>
+          <p className="text-sm text-muted-foreground">
+            Last scraped{" "}
+            <span className="font-semibold text-primary">
+              {new Date(data.generated_at).toLocaleString()}
+            </span>
+          </p>
+          <div className="grid grid-cols-2 gap-3 pt-2 text-sm">
+            <div className="p-3 rounded-xl bg-muted/30">
+              <p className="text-xs uppercase text-muted-foreground">Pros</p>
+              <p className="text-lg font-bold text-success">
+                {dashboardData.kpis.positiveSignals}
+              </p>
+            </div>
+            <div className="p-3 rounded-xl bg-muted/30">
+              <p className="text-xs uppercase text-muted-foreground">Alerts</p>
+              <p className="text-lg font-bold text-destructive">
+                {dashboardData.kpis.alerts}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="brutal-card-lg p-6 space-y-4 bg-gradient-to-br from-card to-secondary/10">
+          <p className="text-xs uppercase tracking-[0.4em] text-muted-foreground">
+            Quick tasks
+          </p>
+          <div className="space-y-3">
             {dashboardData.nextActions.length > 0 ? (
               dashboardData.nextActions.map((action, idx) => (
-                <li key={idx} className="flex items-start gap-3">
-                  <span className={`w-2 h-2 rounded-full mt-2 ${
-                    idx === 0 ? "bg-success" : idx === 1 ? "bg-secondary" : "bg-accent"
-                  }`} />
+                <div key={action} className="flex items-start gap-3">
+                  <span
+                    className={`mt-2 w-2 h-2 rounded-full ${
+                      idx === 0
+                        ? "bg-success"
+                        : idx === 1
+                        ? "bg-secondary"
+                        : "bg-accent"
+                    }`}
+                  />
                   {action}
-                </li>
+                </div>
               ))
             ) : (
-              <li className="flex items-start gap-3 text-muted-foreground">
-                <span className="w-2 h-2 rounded-full bg-muted-foreground mt-2" />
+              <div className="flex items-start gap-3 text-muted-foreground">
+                <Bolt className="w-4 h-4 mt-1" />
                 No specific actions recommended at this time.
-              </li>
+              </div>
             )}
-          </ul>
+          </div>
+        </div>
+
+        <div className="brutal-card-lg p-6 space-y-4 bg-gradient-to-br from-card to-accent/10">
+          <p className="text-xs uppercase tracking-[0.4em] text-muted-foreground">
+            Command center
+          </p>
+          <div className="space-y-3 text-sm text-muted-foreground">
+            <p>
+              • Check <Link className="text-primary" to="/compare">Compare</Link> for saved match-ups.
+            </p>
+            <p>
+              • Review <Link className="text-primary" to="/news">Top News</Link> for fresh headlines.
+            </p>
+            <p>
+              • Browse <Link className="text-primary" to="/companies">Companies</Link> for full dossiers.
+            </p>
+          </div>
         </div>
       </section>
     </div>

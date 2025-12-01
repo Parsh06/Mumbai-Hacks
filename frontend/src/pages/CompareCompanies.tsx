@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import LoadingState from "@/components/LoadingState";
 import { useCompanyDataset } from "@/hooks/useCompanyDataset";
@@ -36,7 +37,10 @@ const KEY_METRICS: KeyMetric[] = [
   { label: "ROE", metric: "ROE" },
 ];
 
-const getMetricValue = (company: CompanyRecord | undefined, metric: string) => {
+const getMetricValue = (
+  company: CompanyRecord | undefined,
+  metric: string
+): string => {
   if (!company) return "—";
   const ratio = (company.key_ratios || []).find((r) => r.metric === metric);
   return ratio?.value ?? "—";
@@ -44,7 +48,7 @@ const getMetricValue = (company: CompanyRecord | undefined, metric: string) => {
 
 const parseNumber = (value: string | undefined): number | null => {
   if (!value) return null;
-  const cleaned = value.replace(/[^0-9.\-]/g, "");
+  const cleaned = value.replace(/[^0-9.-]/g, "");
   const num = parseFloat(cleaned);
   return Number.isFinite(num) ? num : null;
 };
@@ -70,11 +74,8 @@ const buildQuarterlyChartData = (rows?: TableRow[]) => {
       sales: parseNumber(salesRow?.[quarter] ?? undefined),
       netProfit: parseNumber(netProfitRow?.[quarter] ?? undefined),
     }))
-    .filter(
-      (item) => item.sales !== null || item.netProfit !== null
-    );
+    .filter((item) => item.sales !== null || item.netProfit !== null);
 };
-
 
 type ChartMetric = { label: string; metric: string; type: "number" | "percent" };
 
@@ -86,11 +87,17 @@ type ChartConfig = {
   metrics?: ChartMetric[];
 };
 
+type SavedComparison = {
+  left: string;
+  right: string;
+  createdAt: string;
+};
+
 const CHART_CONFIGS: ChartConfig[] = [
   {
     id: "sales-profit",
     label: "Sales & Profit Trends (Line)",
-    description: "Quarterly sales and net profit trends (2022-2025) showing growth patterns.",
+    description: "Quarterly sales and net profit trends showing growth patterns.",
     chartType: "line",
   },
   {
@@ -119,14 +126,17 @@ const CHART_CONFIGS: ChartConfig[] = [
 
 export default function CompareCompanies() {
   const { data, isLoading, error } = useCompanyDataset();
-  const [leftTicker, setLeftTicker] = useState<string>("");
-  const [rightTicker, setRightTicker] = useState<string>("");
-  const [leftQuery, setLeftQuery] = useState<string>("");
-  const [rightQuery, setRightQuery] = useState<string>("");
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const [leftTicker, setLeftTicker] = useState("");
+  const [rightTicker, setRightTicker] = useState("");
+  const [leftQuery, setLeftQuery] = useState("");
+  const [rightQuery, setRightQuery] = useState("");
   const [leftOpen, setLeftOpen] = useState(false);
   const [rightOpen, setRightOpen] = useState(false);
   const [showComparison, setShowComparison] = useState(false);
   const [chartMode, setChartMode] = useState<ChartConfig["id"]>("sales-profit");
+  const [savedComparisons, setSavedComparisons] = useState<SavedComparison[]>([]);
 
   const options = useMemo(
     () =>
@@ -169,6 +179,59 @@ export default function CompareCompanies() {
     [data, rightTicker]
   );
 
+  // Initialize from URL query params (?left=TCS&right=INFY)
+  useEffect(() => {
+    const left = searchParams.get("left");
+    const right = searchParams.get("right");
+
+    if (left) {
+      setLeftTicker(left);
+      setLeftQuery(left);
+    }
+    if (right) {
+      setRightTicker(right);
+      setRightQuery(right);
+    }
+    if (left && right && left !== right) {
+      setShowComparison(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Keep URL in sync with current selection
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (leftTicker) params.set("left", leftTicker);
+    if (rightTicker) params.set("right", rightTicker);
+    setSearchParams(params);
+  }, [leftTicker, rightTicker, setSearchParams]);
+
+  // Load saved comparisons from localStorage once
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem("finsightai_saved_comparisons");
+      if (!raw) return;
+      const parsed = JSON.parse(raw) as SavedComparison[];
+      if (Array.isArray(parsed)) {
+        setSavedComparisons(parsed);
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  // Persist saved comparisons
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(
+        "finsightai_saved_comparisons",
+        JSON.stringify(savedComparisons)
+      );
+    } catch {
+      // ignore
+    }
+  }, [savedComparisons]);
+
   const handleShow = () => {
     if (leftTicker && rightTicker && leftTicker !== rightTicker) {
       setShowComparison(true);
@@ -177,8 +240,20 @@ export default function CompareCompanies() {
     }
   };
 
+  const handleSaveComparison = () => {
+    if (!leftTicker || !rightTicker || leftTicker === rightTicker) return;
+    const exists = savedComparisons.some(
+      (s) => s.left === leftTicker && s.right === rightTicker
+    );
+    if (exists) return;
+    setSavedComparisons((prev) => [
+      { left: leftTicker, right: rightTicker, createdAt: new Date().toISOString() },
+      ...prev,
+    ]);
+  };
+
   const handleInvestmentAnalysis = () => {
-    // Button is kept but does nothing
+    // Button kept as a disabled placeholder (backend removed)
     return;
   };
 
@@ -222,8 +297,8 @@ export default function CompareCompanies() {
           </h1>
           <p className="text-lg text-muted-foreground font-medium max-w-2xl">
             Search by name or ticker for each side. Hit{" "}
-            <span className="font-semibold text-primary">Show data</span> to
-            reveal the key financials side by side.
+            <span className="font-semibold text-primary">Show data</span> to reveal
+            the key financials side by side.
           </p>
         </div>
       </div>
@@ -231,6 +306,7 @@ export default function CompareCompanies() {
       {/* Search-based selection row */}
       <div className="brutal-card-lg p-6 space-y-6">
         <div className="grid md:grid-cols-2 gap-6">
+          {/* Left selector */}
           <div className="space-y-2 relative">
             <input
               className="brutal-input w-full px-4 py-3 font-semibold"
@@ -261,10 +337,11 @@ export default function CompareCompanies() {
                     </span>
                   </button>
                 ))}
-          </div>
+              </div>
             )}
-        </div>
+          </div>
 
+          {/* Right selector */}
           <div className="space-y-2 relative">
             <input
               className="brutal-input w-full px-4 py-3 font-semibold"
@@ -297,10 +374,10 @@ export default function CompareCompanies() {
                 ))}
               </div>
             )}
+          </div>
         </div>
-      </div>
 
-        <div className="flex justify-center">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <Button
             className="brutal-button bg-primary text-primary-foreground"
             onClick={handleShow}
@@ -310,242 +387,318 @@ export default function CompareCompanies() {
           >
             Show data
           </Button>
-      </div>
+          <Button
+            type="button"
+            variant="outline"
+            className="brutal-button text-xs sm:text-sm"
+            onClick={handleSaveComparison}
+            disabled={
+              !leftTicker || !rightTicker || leftTicker === rightTicker
+            }
+          >
+            Save this pair
+          </Button>
+        </div>
 
         {!showComparison && (
           <p className="text-xs text-muted-foreground text-center">
             Search and pick two different companies, then click{" "}
-            <span className="font-semibold">Show data</span> to view the
-            comparison.
+            <span className="font-semibold">Show data</span> to view the comparison.
           </p>
         )}
-        </div>
+      </div>
 
       {/* Side-by-side comparison */}
       {showComparison && leftCompany && rightCompany && (
-        <div className="brutal-card-lg p-6 space-y-8">
-          <div className="grid md:grid-cols-3 gap-6 items-start">
-            <div />
-            <div className="space-y-1 text-center">
-              <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground font-semibold">
-                {leftCompany.company_code}
-              </p>
-              <p className="text-xl font-bold">
-                {leftCompany.name || leftCompany.company_code}
-              </p>
+        <div className="grid lg:grid-cols-[minmax(0,3fr)_minmax(0,1.4fr)] gap-6 items-start">
+          {/* Main comparison card */}
+          <div className="brutal-card-lg p-6 space-y-8">
+            <div className="grid md:grid-cols-3 gap-6 items-start">
+              <div />
+              <div className="space-y-1 text-center">
+                <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground font-semibold">
+                  {leftCompany.company_code}
+                </p>
+                <p className="text-xl font-bold">
+                  {leftCompany.name || leftCompany.company_code}
+                </p>
               </div>
-            <div className="space-y-1 text-center">
-              <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground font-semibold">
-                {rightCompany.company_code}
-              </p>
-              <p className="text-xl font-bold">
-                {rightCompany.name || rightCompany.company_code}
-          </p>
-        </div>
-      </div>
+              <div className="space-y-1 text-center">
+                <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground font-semibold">
+                  {rightCompany.company_code}
+                </p>
+                <p className="text-xl font-bold">
+                  {rightCompany.name || rightCompany.company_code}
+                </p>
+              </div>
+            </div>
 
-          <div className="overflow-x-auto brutal-card bg-card/80 border border-border/80 rounded-xl shadow-[var(--shadow-brutal-lg)]">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-border/70 text-left bg-muted/40">
-                  <th className="py-3 pr-4 pl-4 font-bold text-xs uppercase tracking-[0.25em] text-muted-foreground">
-                    Metric
-                  </th>
-                  <th className="py-3 pr-4 text-center font-bold text-xs uppercase tracking-[0.25em] text-muted-foreground">
-                    {leftCompany.company_code}
-                  </th>
-                  <th className="py-3 pr-4 text-center font-bold text-xs uppercase tracking-[0.25em] text-muted-foreground">
-                    {rightCompany.company_code}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {KEY_METRICS.map((m, idx) => (
-                  <tr
-                    key={m.metric}
-                    className={`border-b border-border/40 ${
-                      idx % 2 === 0 ? "bg-background/40" : "bg-background/10"
-                    } hover:bg-primary/5 transition-colors`}
-                  >
-                    <td className="py-3 pr-4 pl-4 font-semibold text-xs sm:text-sm">
-                      {m.label}
-                    </td>
-                    <td className="py-3 pr-4 text-center font-medium text-xs sm:text-sm">
-                      {getMetricValue(leftCompany, m.metric)}
-                    </td>
-                    <td className="py-3 pr-4 text-center font-medium text-xs sm:text-sm">
-                      {getMetricValue(rightCompany, m.metric)}
-                    </td>
+            <div className="overflow-x-auto brutal-card bg-card/80 border border-border/80 rounded-xl shadow-[var(--shadow-brutal-lg)]">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border/70 text-left bg-muted/40">
+                    <th className="py-3 pr-4 pl-4 font-bold text-xs uppercase tracking-[0.25em] text-muted-foreground">
+                      Metric
+                    </th>
+                    <th className="py-3 pr-4 text-center font-bold text-xs uppercase tracking-[0.25em] text-muted-foreground">
+                      {leftCompany.company_code}
+                    </th>
+                    <th className="py-3 pr-4 text-center font-bold text-xs uppercase tracking-[0.25em] text-muted-foreground">
+                      {rightCompany.company_code}
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Visual chart with dropdown */}
-          <div className="brutal-card-lg p-6 bg-gradient-to-br from-card to-primary/5 border border-border/80 rounded-xl space-y-4">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-          <div>
-                <h3 className="text-lg font-bold">Financial Visualizations</h3>
-                <p className="text-xs text-muted-foreground font-medium">
-                  Compare key metrics across both companies
-            </p>
-          </div>
-              <div className="relative">
-                <select
-                  className="brutal-input pr-10 pl-4 py-2 font-semibold appearance-none cursor-pointer bg-card border-border text-sm"
-                  value={chartMode}
-                  onChange={(e) =>
-                    setChartMode(e.target.value as ChartConfig["id"])
-                  }
-                >
-                  {CHART_CONFIGS.map((cfg) => (
-                    <option key={cfg.id} value={cfg.id}>
-                      {cfg.label}
-                    </option>
+                </thead>
+                <tbody>
+                  {KEY_METRICS.map((m, idx) => (
+                    <tr
+                      key={m.metric}
+                      className={`border-b border-border/40 ${
+                        idx % 2 === 0 ? "bg-background/40" : "bg-background/10"
+                      } hover:bg-primary/5 transition-colors`}
+                    >
+                      <td className="py-3 pr-4 pl-4 font-semibold text-xs sm:text-sm">
+                        {m.label}
+                      </td>
+                      <td className="py-3 pr-4 text-center font-medium text-xs sm:text-sm">
+                        {getMetricValue(leftCompany, m.metric)}
+                      </td>
+                      <td className="py-3 pr-4 text-center font-medium text-xs sm:text-sm">
+                        {getMetricValue(rightCompany, m.metric)}
+                      </td>
+                    </tr>
                   ))}
-                </select>
-                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
-        </div>
-      </div>
-            <p className="text-xs text-muted-foreground">
-              {
-                CHART_CONFIGS.find((cfg) => cfg.id === chartMode)
-                  ?.description
-              }
-            </p>
-            <div className="h-80">
-              <ResponsiveContainer width="100%" height="100%">
-                {chartMode === "sales-profit" ? (
-                  (() => {
-                    const leftData = buildQuarterlyChartData(leftCompany?.tables?.["Quarterly Results"]);
-                    const rightData = buildQuarterlyChartData(rightCompany?.tables?.["Quarterly Results"]);
-                    const allQuarters = Array.from(
-                      new Set([
-                        ...leftData.map((d) => d.quarter),
-                        ...rightData.map((d) => d.quarter),
-                      ])
-                    ).sort();
-                    const combinedData = allQuarters.map((q) => {
-                      const left = leftData.find((d) => d.quarter === q);
-                      const right = rightData.find((d) => d.quarter === q);
-                      return {
-                        quarter: q,
-                        [`${leftCompany.company_code} Sales`]: left?.sales ?? null,
-                        [`${leftCompany.company_code} Net Profit`]: left?.netProfit ?? null,
-                        [`${rightCompany.company_code} Sales`]: right?.sales ?? null,
-                        [`${rightCompany.company_code} Net Profit`]: right?.netProfit ?? null,
-                      };
-                    });
-                    return (
-                      <LineChart data={combinedData} margin={{ top: 16, right: 24, left: 8, bottom: 24 }}>
-                        <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-                        <XAxis dataKey="quarter" tick={{ fontSize: 10 }} angle={-20} textAnchor="end" height={60} />
-                        <YAxis tick={{ fontSize: 10 }} />
-                        <Tooltip />
-                        <Legend />
-                        <Line
-                          type="monotone"
-                          dataKey={`${leftCompany.company_code} Sales`}
-                          stroke="hsl(var(--primary))"
-                          strokeWidth={2}
-                          dot={{ r: 4 }}
-                          activeDot={{ r: 6 }}
-                        />
-                        <Line
-                          type="monotone"
-                          dataKey={`${leftCompany.company_code} Net Profit`}
-                          stroke="hsl(var(--primary))"
-                          strokeWidth={2}
-                          strokeDasharray="5 5"
-                          dot={{ r: 4 }}
-                          activeDot={{ r: 6 }}
-                        />
-                        <Line
-                          type="monotone"
-                          dataKey={`${rightCompany.company_code} Sales`}
-                          stroke="hsl(var(--secondary))"
-                          strokeWidth={2}
-                          dot={{ r: 4 }}
-                          activeDot={{ r: 6 }}
-                        />
-                        <Line
-                          type="monotone"
-                          dataKey={`${rightCompany.company_code} Net Profit`}
-                          stroke="hsl(var(--secondary))"
-                          strokeWidth={2}
-                          strokeDasharray="5 5"
-                          dot={{ r: 4 }}
-                          activeDot={{ r: 6 }}
-                        />
-                      </LineChart>
-                    );
-                  })()
-                ) : (
-                  <BarChart
-                    data={(
-                      CHART_CONFIGS.find((cfg) => cfg.id === chartMode)
-                        ?.metrics ?? []
-                    ).map((m) => {
-                      const leftRaw =
-                        getMetricValue(leftCompany, m.metric) ?? undefined;
-                      const rightRaw =
-                        getMetricValue(rightCompany, m.metric) ?? undefined;
-                      const parser =
-                        m.type === "percent" ? parsePercent : parseNumber;
-                      return {
-                        metric: m.label,
-                        left: parser(leftRaw as string) ?? 0,
-                        right: parser(rightRaw as string) ?? 0,
-                      };
-                    })}
-                    margin={{ top: 16, right: 24, left: 8, bottom: 24 }}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Visual chart with dropdown */}
+            <div className="brutal-card-lg p-6 bg-gradient-to-br from-card to-primary/5 border border-border/80 rounded-xl space-y-4">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                <div>
+                  <h3 className="text-lg font-bold">Financial Visualizations</h3>
+                  <p className="text-xs text-muted-foreground font-medium">
+                    Compare key metrics across both companies
+                  </p>
+                </div>
+                <div className="relative">
+                  <select
+                    className="brutal-input pr-10 pl-4 py-2 font-semibold appearance-none cursor-pointer bg-card border-border text-sm"
+                    value={chartMode}
+                    onChange={(e) =>
+                      setChartMode(e.target.value as ChartConfig["id"])
+                    }
                   >
-                    <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-                    <XAxis
-                      dataKey="metric"
-                      tick={{ fontSize: 10 }}
-                      angle={-20}
-                      textAnchor="end"
-                      height={60}
-                    />
-                    <YAxis tick={{ fontSize: 10 }} />
-                    <Tooltip />
-                    <Legend />
-                    <Bar
-                      dataKey="left"
-                      name={leftCompany.company_code}
-                      fill="hsl(var(--primary))"
-                      radius={[4, 4, 0, 0]}
-                      className="cursor-pointer"
-                    />
-                    <Bar
-                      dataKey="right"
-                      name={rightCompany.company_code}
-                      fill="hsl(var(--secondary))"
-                      radius={[4, 4, 0, 0]}
-                      className="cursor-pointer"
-                    />
-                  </BarChart>
-                )}
-              </ResponsiveContainer>
+                    {CHART_CONFIGS.map((cfg) => (
+                      <option key={cfg.id} value={cfg.id}>
+                        {cfg.label}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                {CHART_CONFIGS.find((cfg) => cfg.id === chartMode)?.description}
+              </p>
+              <div className="h-80">
+                <ResponsiveContainer width="100%" height="100%">
+                  {chartMode === "sales-profit" ? (
+                    (() => {
+                      const leftData = buildQuarterlyChartData(
+                        leftCompany.tables?.["Quarterly Results"]
+                      );
+                      const rightData = buildQuarterlyChartData(
+                        rightCompany.tables?.["Quarterly Results"]
+                      );
+                      const allQuarters = Array.from(
+                        new Set([
+                          ...leftData.map((d) => d.quarter),
+                          ...rightData.map((d) => d.quarter),
+                        ])
+                      ).sort();
+                      const combinedData = allQuarters.map((q) => {
+                        const left = leftData.find((d) => d.quarter === q);
+                        const right = rightData.find((d) => d.quarter === q);
+                        return {
+                          quarter: q,
+                          [`${leftCompany.company_code} Sales`]:
+                            left?.sales ?? null,
+                          [`${leftCompany.company_code} Net Profit`]:
+                            left?.netProfit ?? null,
+                          [`${rightCompany.company_code} Sales`]:
+                            right?.sales ?? null,
+                          [`${rightCompany.company_code} Net Profit`]:
+                            right?.netProfit ?? null,
+                        };
+                      });
+                      return (
+                        <LineChart
+                          data={combinedData}
+                          margin={{ top: 16, right: 24, left: 8, bottom: 24 }}
+                        >
+                          <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
+                          <XAxis
+                            dataKey="quarter"
+                            tick={{ fontSize: 10 }}
+                            angle={-20}
+                            textAnchor="end"
+                            height={60}
+                          />
+                          <YAxis tick={{ fontSize: 10 }} />
+                          <Tooltip />
+                          <Legend />
+                          <Line
+                            type="monotone"
+                            dataKey={`${leftCompany.company_code} Sales`}
+                            stroke="hsl(var(--primary))"
+                            strokeWidth={2}
+                            dot={{ r: 4 }}
+                            activeDot={{ r: 6 }}
+                          />
+                          <Line
+                            type="monotone"
+                            dataKey={`${leftCompany.company_code} Net Profit`}
+                            stroke="hsl(var(--primary))"
+                            strokeWidth={2}
+                            strokeDasharray="5 5"
+                            dot={{ r: 4 }}
+                            activeDot={{ r: 6 }}
+                          />
+                          <Line
+                            type="monotone"
+                            dataKey={`${rightCompany.company_code} Sales`}
+                            stroke="hsl(var(--secondary))"
+                            strokeWidth={2}
+                            dot={{ r: 4 }}
+                            activeDot={{ r: 6 }}
+                          />
+                          <Line
+                            type="monotone"
+                            dataKey={`${rightCompany.company_code} Net Profit`}
+                            stroke="hsl(var(--secondary))"
+                            strokeWidth={2}
+                            strokeDasharray="5 5"
+                            dot={{ r: 4 }}
+                            activeDot={{ r: 6 }}
+                          />
+                        </LineChart>
+                      );
+                    })()
+                  ) : (
+                    <BarChart
+                      data={(
+                        CHART_CONFIGS.find((cfg) => cfg.id === chartMode)
+                          ?.metrics ?? []
+                      ).map((m) => {
+                        const leftRaw =
+                          getMetricValue(leftCompany, m.metric) ?? undefined;
+                        const rightRaw =
+                          getMetricValue(rightCompany, m.metric) ?? undefined;
+                        const parser =
+                          m.type === "percent" ? parsePercent : parseNumber;
+                        return {
+                          metric: m.label,
+                          left: parser(leftRaw as string) ?? 0,
+                          right: parser(rightRaw as string) ?? 0,
+                        };
+                      })}
+                      margin={{ top: 16, right: 24, left: 8, bottom: 24 }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
+                      <XAxis
+                        dataKey="metric"
+                        tick={{ fontSize: 10 }}
+                        angle={-20}
+                        textAnchor="end"
+                        height={60}
+                      />
+                      <YAxis tick={{ fontSize: 10 }} />
+                      <Tooltip />
+                      <Legend />
+                      <Bar
+                        dataKey="left"
+                        name={leftCompany.company_code}
+                        fill="hsl(var(--primary))"
+                        radius={[4, 4, 0, 0]}
+                        className="cursor-pointer"
+                      />
+                      <Bar
+                        dataKey="right"
+                        name={rightCompany.company_code}
+                        fill="hsl(var(--secondary))"
+                        radius={[4, 4, 0, 0]}
+                        className="cursor-pointer"
+                      />
+                    </BarChart>
+                  )}
+                </ResponsiveContainer>
+              </div>
+
+              {/* Investment Analysis Button */}
+              <div className="flex justify-center">
+                <Button
+                  onClick={handleInvestmentAnalysis}
+                  disabled
+                  className="brutal-button bg-gradient-to-r from-primary via-secondary to-accent text-primary-foreground opacity-60 cursor-not-allowed px-8 py-6 text-lg font-bold"
+                >
+                  <Sparkles className="w-5 h-5 mr-2" />
+                  Analysis for Investments
+                </Button>
+              </div>
             </div>
           </div>
 
-          {/* Investment Analysis Button */}
-          <div className="flex justify-center">
-            <Button
-              onClick={handleInvestmentAnalysis}
-              disabled
-              className="brutal-button bg-gradient-to-r from-primary via-secondary to-accent text-primary-foreground opacity-60 cursor-not-allowed px-8 py-6 text-lg font-bold"
-            >
-              <Sparkles className="w-5 h-5 mr-2" />
-              Analysis for Investments
-            </Button>
+          {/* Saved comparisons sidebar */}
+          <div className="space-y-4 brutal-card-lg p-5 bg-card/90 border border-border/80 rounded-xl">
+            <div className="flex items-center justify-between gap-2">
+              <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground font-semibold">
+                Saved comparisons
+              </p>
+              <span className="text-[11px] text-muted-foreground">
+                {savedComparisons.length || 0} pairs
+              </span>
+            </div>
+            {savedComparisons.length === 0 ? (
+              <p className="text-xs text-muted-foreground">
+                Use <span className="font-semibold">Save this pair</span> to pin
+                frequently used comparisons here.
+              </p>
+            ) : (
+              <div className="space-y-2 max-h-80 overflow-y-auto">
+                {savedComparisons.map((pair) => (
+                  <button
+                    key={`${pair.left}-${pair.right}-${pair.createdAt}`}
+                    type="button"
+                    className="w-full text-left brutal-card p-2 bg-background/80 hover:bg-background flex items-center justify-between gap-2 text-xs"
+                    onClick={() => {
+                      setLeftTicker(pair.left);
+                      setRightTicker(pair.right);
+                      setLeftQuery(pair.left);
+                      setRightQuery(pair.right);
+                      setShowComparison(true);
+                    }}
+                  >
+                    <div>
+                      <p className="font-semibold">
+                        {pair.left} vs {pair.right}
+                      </p>
+                      <p className="text-[10px] text-muted-foreground">
+                        Saved{" "}
+                        {new Date(pair.createdAt).toLocaleDateString(undefined, {
+                          month: "short",
+                          day: "numeric",
+                        })}
+                      </p>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}
     </div>
   );
 }
+
 

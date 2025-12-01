@@ -169,6 +169,82 @@ const getRatioCards = (company?: CompanyRecord) => {
   return (company.key_ratios ?? []).slice(0, 4);
 };
 
+const getRatioValue = (company: CompanyRecord | undefined, metric: string) => {
+  if (!company) return "—";
+  const ratio = (company.key_ratios || []).find((r) => r.metric === metric);
+  return ratio?.value ?? "—";
+};
+
+const parseMarketCap = (value: string | undefined): number | null => {
+  if (!value) return null;
+  const cleaned = value.replace(/[^0-9.\-]/g, "");
+  const num = parseFloat(cleaned);
+  return Number.isFinite(num) ? num : null;
+};
+
+const parsePercent = (value: string | undefined): number | null => {
+  if (!value) return null;
+  const cleaned = value.replace("%", "");
+  const num = parseFloat(cleaned);
+  return Number.isFinite(num) ? num : null;
+};
+
+const computeFactorScores = (company: CompanyRecord | undefined) => {
+  if (!company) {
+    return { value: 0, quality: 0, growth: 0 };
+  }
+
+  const pe = parseNumericValue(getRatioValue(company, "Stock P/E"));
+  const dy = parsePercent(getRatioValue(company, "Dividend Yield"));
+  const pb = parseNumericValue(getRatioValue(company, "Book Value"));
+  const roe = parsePercent(getRatioValue(company, "ROE"));
+  const roce = parsePercent(getRatioValue(company, "ROCE"));
+
+  let value = 50;
+  if (pe !== null) {
+    if (pe < 15) value += 20;
+    else if (pe < 25) value += 10;
+    else if (pe > 40) value -= 10;
+  }
+  if (dy !== null) {
+    if (dy > 3) value += 20;
+    else if (dy > 1) value += 10;
+  }
+  if (pb !== null) {
+    if (pb < 2) value += 10;
+    else if (pb > 5) value -= 10;
+  }
+
+  let quality = 50;
+  if (roe !== null) {
+    if (roe > 20) quality += 20;
+    else if (roe > 15) quality += 10;
+  }
+  if (roce !== null) {
+    if (roce > 20) quality += 20;
+    else if (roce > 15) quality += 10;
+  }
+
+  let growth = 50;
+  if (roe !== null) {
+    if (roe > 18) growth += 15;
+    else if (roe > 12) growth += 8;
+  }
+  if (dy !== null && dy < 1) {
+    growth += 5;
+  }
+  if (revenueCagr3Y !== null && revenueCagr3Y > 0.1) {
+    growth += 10;
+  }
+
+  const clamp = (v: number) => Math.max(0, Math.min(100, v));
+  return {
+    value: clamp(value),
+    quality: clamp(quality),
+    growth: clamp(growth),
+  };
+};
+
 const buildInsights = (company?: CompanyRecord) => {
   if (!company) return [];
   return [
@@ -178,10 +254,12 @@ const buildInsights = (company?: CompanyRecord) => {
 };
 
 type ChartType = "sales-profit" | "profitability" | "valuation" | "cashflow";
+type Frequency = "quarterly" | "annual";
 
 export default function CompanyOverview() {
   const { ticker = "RELIANCE" } = useParams();
   const [selectedChart, setSelectedChart] = useState<ChartType>("sales-profit");
+  const [frequency, setFrequency] = useState<Frequency>("quarterly");
 
   const { data, isLoading, error } = useCompanyDataset();
 
@@ -205,9 +283,84 @@ export default function CompanyOverview() {
     [company]
   );
 
+  const salesProfitChartData = useMemo(() => {
+    if (frequency === "quarterly") {
+      return quarterlyChartData.map((d) => ({
+        period: d.quarter,
+        sales: d.sales,
+        netProfit: d.netProfit,
+      }));
+    }
+    return annualPnlData.map((d) => ({
+      period: d.year,
+      sales: d.sales,
+      netProfit: d.netProfit,
+    }));
+  }, [frequency, quarterlyChartData, annualPnlData]);
+
+  // Simple 3-year revenue CAGR and net margin trend from annual P&L
+  const revenueCagr3Y = useMemo(() => {
+    if (!annualPnlData || annualPnlData.length < 3) return null;
+    const recent = annualPnlData.slice(-3);
+    const first = recent[0];
+    const last = recent[recent.length - 1];
+    if (!first.sales || !last.sales || first.sales === 0) return null;
+    const years = recent.length - 1 || 1;
+    const cagr = Math.pow(last.sales / first.sales, 1 / years) - 1;
+    return Number.isFinite(cagr) ? cagr : null;
+  }, [annualPnlData]);
+
+  const marginTrend3Y = useMemo(() => {
+    if (!annualPnlData || annualPnlData.length < 3) return null;
+    const recent = annualPnlData.slice(-3);
+    const margins = recent
+      .map((r) =>
+        r.sales && r.netProfit ? r.netProfit / r.sales : null
+      )
+      .filter((m): m is number => m !== null);
+    if (margins.length < 2) return null;
+    const delta = margins[margins.length - 1] - margins[0];
+    return delta;
+  }, [annualPnlData]);
+
   const insights = useMemo(() => buildInsights(company), [company]);
   const ratioCards = useMemo(() => getRatioCards(company), [company]);
   const tables = company?.tables ?? {};
+  const factorScores = useMemo(() => computeFactorScores(company), [company]);
+
+  // Simple peer selection: same sector & similar market cap bucket
+  const peers = useMemo(() => {
+    if (!data || !company) return [];
+
+    const sector = company.sector || company.industry || "";
+    const mkcapRaw = getRatioValue(company, "Market Cap");
+    const mkcap = parseMarketCap(mkcapRaw);
+
+    // bucket market cap into rough ranges (in crores)
+    const getBucket = (val: number | null) => {
+      if (val === null) return "unknown";
+      if (val < 5_000) return "small";
+      if (val < 50_000) return "mid";
+      if (val < 2_00_000) return "large";
+      return "mega";
+    };
+
+    const targetBucket = getBucket(mkcap);
+
+    return (data.companies || [])
+      .filter((c) => c.company_code !== company.company_code)
+      .filter((c) => {
+        const sameSector =
+          !sector ||
+          c.sector === sector ||
+          c.industry === sector;
+        const bucket = getBucket(
+          parseMarketCap(getRatioValue(c, "Market Cap"))
+        );
+        return sameSector && bucket === targetBucket;
+      })
+      .slice(0, 5);
+  }, [data, company]);
 
   if (isLoading) {
     return <LoadingState label={`Loading ${ticker} intel...`} />;
@@ -296,37 +449,107 @@ export default function CompanyOverview() {
 
       <div className="grid lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
-          {/* Chart selector with dropdown */}
+          {/* Chart selector with dropdown + frequency toggle + trend badges */}
           <div className="brutal-card-lg p-6 space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-display-sm font-display">Financial Visualizations</h2>
-              <div className="relative">
-                <select
-                  value={selectedChart}
-                  onChange={(e) => setSelectedChart(e.target.value as ChartType)}
-                  className="brutal-input pr-10 pl-4 py-2 font-semibold appearance-none cursor-pointer bg-card border-border"
-                >
-                  <option value="sales-profit">Sales & Profit Trends (Line)</option>
-                  <option value="profitability">ROE/ROCE Comparison (Bar)</option>
-                  <option value="valuation">Valuation Ratios (Bar)</option>
-                  <option value="cashflow">Cash Flow Breakdown (Stacked)</option>
-                </select>
-                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <div className="space-y-1">
+                <h2 className="text-display-sm font-display">Financial Visualizations</h2>
+                <p className="text-xs text-muted-foreground">
+                  Toggle between quarterly and annual views, and scan quick trend badges.
+                </p>
               </div>
+              <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
+                <div className="inline-flex rounded-full border border-border bg-card p-1 text-xs font-semibold">
+                  <button
+                    type="button"
+                    className={`px-3 py-1 rounded-full ${
+                      frequency === "quarterly"
+                        ? "bg-primary text-primary-foreground shadow-sm"
+                        : "text-muted-foreground"
+                    }`}
+                    onClick={() => setFrequency("quarterly")}
+                  >
+                    Quarterly
+                  </button>
+                  <button
+                    type="button"
+                    className={`px-3 py-1 rounded-full ${
+                      frequency === "annual"
+                        ? "bg-primary text-primary-foreground shadow-sm"
+                        : "text-muted-foreground"
+                    }`}
+                    onClick={() => setFrequency("annual")}
+                  >
+                    Annual
+                  </button>
+                </div>
+                <div className="relative">
+                  <select
+                    value={selectedChart}
+                    onChange={(e) => setSelectedChart(e.target.value as ChartType)}
+                    className="brutal-input pr-10 pl-4 py-2 font-semibold appearance-none cursor-pointer bg-card border-border text-sm"
+                  >
+                    <option value="sales-profit">Sales & Profit Trends (Line)</option>
+                    <option value="profitability">ROE/ROCE Comparison (Bar)</option>
+                    <option value="valuation">Valuation Ratios (Bar)</option>
+                    <option value="cashflow">Cash Flow Breakdown (Stacked)</option>
+                  </select>
+                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                </div>
+              </div>
+            </div>
+
+            {/* Trend badges computed from annual P&L */}
+            <div className="flex flex-wrap gap-2">
+              {revenueCagr3Y !== null && (
+                <span
+                  className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-semibold ${
+                    revenueCagr3Y > 0
+                      ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/40"
+                      : "bg-amber-500/10 text-amber-400 border border-amber-500/40"
+                  }`}
+                >
+                  <TrendingUp className="w-3 h-3" />
+                  Revenue CAGR 3Y: {(revenueCagr3Y * 100).toFixed(1)}%
+                </span>
+              )}
+              {marginTrend3Y !== null && (
+                <span
+                  className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-semibold ${
+                    marginTrend3Y > 0.01
+                      ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/40"
+                      : marginTrend3Y < -0.01
+                      ? "bg-rose-500/15 text-rose-400 border border-rose-500/40"
+                      : "bg-slate-500/10 text-slate-300 border border-slate-500/30"
+                  }`}
+                >
+                  Net margin{" "}
+                  {marginTrend3Y > 0.01
+                    ? "improving"
+                    : marginTrend3Y < -0.01
+                    ? "compressing"
+                    : "stable"}
+                </span>
+              )}
             </div>
 
             <div className="brutal-card p-6 min-h-[400px] bg-gradient-to-br from-card to-primary/5">
               {/* Sales & Profit Trends (Line Chart) */}
-              {selectedChart === "sales-profit" && quarterlyChartData.length > 0 && (
+              {selectedChart === "sales-profit" && salesProfitChartData.length > 0 && (
                 <div className="space-y-3">
-                  <h3 className="text-lg font-bold">Quarterly Sales & Profit Trends</h3>
+                  <h3 className="text-lg font-bold">
+                    {frequency === "quarterly"
+                      ? "Quarterly Sales & Profit Trends"
+                      : "Annual Sales & Profit Trends"}
+                  </h3>
                   <p className="text-xs text-muted-foreground">
-                    Track revenue and net profit growth over quarters (2022-2025)
+                    Track revenue and net profit growth over{" "}
+                    {frequency === "quarterly" ? "recent quarters" : "the last few years"}.
                   </p>
                   <ResponsiveContainer width="100%" height={320}>
-                    <LineChart data={quarterlyChartData}>
+                    <LineChart data={salesProfitChartData}>
                       <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-                      <XAxis dataKey="quarter" tick={{ fontSize: 11 }} />
+                      <XAxis dataKey="period" tick={{ fontSize: 11 }} />
                       <YAxis tick={{ fontSize: 11 }} />
                       <Tooltip />
                       <Legend />
@@ -529,7 +752,69 @@ export default function CompanyOverview() {
             />
           )}
 
-          <div className="brutal-card p-6 space-y-3">
+          {/* Peer Snapshot */}
+          {peers.length > 0 && (
+            <div className="brutal-card-lg p-5 space-y-4">
+              <div className="flex items-center justify-between gap-2">
+                <h3 className="text-sm font-bold flex items-center gap-2">
+                  <BarChart3 className="w-4 h-4 text-primary" />
+                  Peer Snapshot
+                </h3>
+                <p className="text-[11px] text-muted-foreground uppercase tracking-[0.2em]">
+                  {peers.length} similar names
+                </p>
+              </div>
+              <div className="space-y-3">
+                {peers.map((peer) => (
+                  <button
+                    key={peer.company_code}
+                    type="button"
+                    className="w-full text-left brutal-card p-3 bg-card/80 hover:bg-card transition-colors flex flex-col gap-2"
+                    onClick={() => {
+                      window.location.href = `/company/${peer.company_code}`;
+                    }}
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <div>
+                        <p className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground font-semibold">
+                          {peer.company_code}
+                        </p>
+                        <p className="text-sm font-semibold line-clamp-1">
+                          {peer.name || peer.company_code}
+                        </p>
+                      </div>
+                      <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-1 rounded-full bg-muted/60">
+                        <TrendingUp className="w-3 h-3 text-primary" />
+                        {getRatioValue(peer, "Market Cap")}
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2 text-[11px] text-muted-foreground">
+                      <div>
+                        <p className="uppercase tracking-wide">P/E</p>
+                        <p className="font-semibold text-foreground">
+                          {getRatioValue(peer, "Stock P/E")}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="uppercase tracking-wide">ROE</p>
+                        <p className="font-semibold text-foreground">
+                          {getRatioValue(peer, "ROE")}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="uppercase tracking-wide">ROCE</p>
+                        <p className="font-semibold text-foreground">
+                          {getRatioValue(peer, "ROCE")}
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="brutal-card p-6 space-y-4">
             <h3 className="text-xl font-bold">Snapshot</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex justify-between">
@@ -564,10 +849,48 @@ export default function CompanyOverview() {
                 </li>
               )}
             </ul>
+
+            {/* Factor score mini-bars */}
+            <div className="mt-3 space-y-2 text-xs">
+              <p className="font-semibold text-muted-foreground uppercase tracking-[0.2em]">
+                Factor profile
+              </p>
+              {(["value", "quality", "growth"] as const).map((key) => {
+                const label =
+                  key === "value"
+                    ? "Value"
+                    : key === "quality"
+                    ? "Quality"
+                    : "Growth";
+                const score = factorScores[key];
+                return (
+                  <div key={key} className="flex items-center gap-2">
+                    <span className="w-14 text-[11px] text-muted-foreground">
+                      {label}
+                    </span>
+                    <div className="flex-1 h-2 rounded-full bg-muted overflow-hidden">
+                      <div
+                        className={`h-full rounded-full ${
+                          score >= 70
+                            ? "bg-emerald-500"
+                            : score >= 40
+                            ? "bg-amber-400"
+                            : "bg-rose-500"
+                        }`}
+                        style={{ width: `${score}%` }}
+                      />
+                    </div>
+                    <span className="w-8 text-right text-[11px] text-muted-foreground">
+                      {score.toFixed(0)}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
           <Button asChild variant="outline" className="brutal-button w-full">
-            <Link to={`/compare?tickers=${company.company_code},TCS,INFY`}>
+            <Link to={`/compare?left=${company.company_code}&right=TCS`}>
               <TrendingUp className="w-4 h-4 mr-2" />
               Launch comparison cockpit
             </Link>
