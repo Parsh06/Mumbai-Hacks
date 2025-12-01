@@ -1,0 +1,1411 @@
+{
+  "generated_at": "2025-11-29T19:19:19.900079+00:00",
+  "total_articles": 156,
+  "sources_scraped": 9,
+  "articles": [
+    {
+      "title": "CryptocurrencyBitcoin, Blockchain and All Else",
+      "link": "https://economictimes.indiatimes.com/markets/cryptocurrency",
+      "summary": "Trending in Markets",
+      "date": "",
+      "category": "Markets",
+      "source": "https://economictimes.indiatimes.com/markets",
+      "scraped_at": "2025-11-29T19:18:37.568548+00:00"
+    },
+    {
+      "title": "India Inc's Scorecard",
+      "link": "markets/stocks/earnings",
+      "summary": "Trending in Markets",
+      "date": "",
+      "category": "Markets",
+      "source": "https://economictimes.indiatimes.com/markets",
+      "scraped_at": "2025-11-29T19:18:37.653887+00:00"
+    },
+    {
+      "title": "CurrenciesForex & Futures",
+      "link": "https://economictimes.indiatimes.com/markets/forex",
+      "summary": "Trending in Markets",
+      "date": "",
+      "category": "Markets",
+      "source": "https://economictimes.indiatimes.com/markets",
+      "scraped_at": "2025-11-29T19:18:37.695868+00:00"
+    },
+    {
+      "title": "Currency Converter",
+      "link": "https://economictimes.indiatimes.com/markets/forex/currency-converter",
+      "summary": "Trending in Markets",
+      "date": "",
+      "category": "Markets",
+      "source": "https://economictimes.indiatimes.com/markets",
+      "scraped_at": "2025-11-29T19:18:37.738984+00:00"
+    },
+    {
+      "title": "IPOStartups, Grey Market, DRHP, Listings",
+      "link": "https://economictimes.indiatimes.com/markets/ipo",
+      "summary": "Quick Links",
+      "date": "",
+      "category": "Markets",
+      "source": "https://economictimes.indiatimes.com/markets",
+      "scraped_at": "2025-11-29T19:18:37.796579+00:00"
+    },
+    {
+      "title": "CommodityBullion, Base Metals & All Else",
+      "link": "https://economictimes.indiatimes.com/markets/commodities",
+      "summary": "Quick Links",
+      "date": "",
+      "category": "Markets",
+      "source": "https://economictimes.indiatimes.com/markets",
+      "scraped_at": "2025-11-29T19:18:37.859840+00:00"
+    },
+    {
+      "title": "Calendar Spread",
+      "link": "https://economictimes.indiatimes.com/marketstats/pid-109,pageno-1,sortby-spreadpercentchange,sortorder-desc.cms",
+      "summary": "Quick Links",
+      "date": "",
+      "category": "Marketstats",
+      "source": "https://economictimes.indiatimes.com/markets",
+      "scraped_at": "2025-11-29T19:18:37.914838+00:00"
+    },
+    {
+      "title": "Digital Real Estate",
+      "link": "https://economictimes.indiatimes.com/markets/digital-real-estate",
+      "summary": "Trending in Markets",
+      "date": "",
+      "category": "Markets",
+      "source": "https://economictimes.indiatimes.com/markets",
+      "scraped_at": "2025-11-29T19:18:38.018258+00:00"
+    },
+    {
+      "title": "The paradox of rate cuts: Why corporate bond yields are hardening instead of falling",
+      "link": "https://economictimes.indiatimes.com/markets/bonds/the-paradox-of-rate-cuts-why-corporate-bond-yields-are-hardening-instead-of-falling/articleshow/125652648.cms",
+      "summary": "Discover bonds that meet your investment goals.",
+      "date": "",
+      "category": "Markets",
+      "source": "https://economictimes.indiatimes.com/markets",
+      "scraped_at": "2025-11-29T19:18:39.684842+00:00"
+    },
+    {
+      "title": "US yields drift higher in low-volume day after CME outage",
+      "link": "https://economictimes.indiatimes.com/markets/bonds/us-yields-drift-higher-in-low-volume-day-after-cme-outage/articleshow/125650842.cms",
+      "summary": "Discover bonds that meet your investment goals.",
+      "date": "",
+      "category": "Markets",
+      "source": "https://economictimes.indiatimes.com/markets",
+      "scraped_at": "2025-11-29T19:18:39.737234+00:00"
+    },
+    {
+      "title": "IRFC raises Rs 2,981 cr via maiden zero-coupon bond issuance",
+      "link": "https://economictimes.indiatimes.com/markets/bonds/irfc-raises-rs-2981-cr-via-maiden-zero-coupon-bond-issuance/articleshow/125640432.cms",
+      "summary": "Discover bonds that meet your investment goals.",
+      "date": "",
+      "category": "Markets",
+      "source": "https://economictimes.indiatimes.com/markets",
+      "scraped_at": "2025-11-29T19:18:39.782094+00:00"
+    },
+    {
+      "title": "Canara Bank raises Rs 3,500 crore at 7.55%",
+      "link": "https://economictimes.indiatimes.com/markets/bonds/canara-bank-raises-rs-3500-crore-at-7-55/articleshow/125639189.cms",
+      "summary": "Discover bonds that meet your investment goals.",
+      "date": "",
+      "category": "Markets",
+      "source": "https://economictimes.indiatimes.com/markets",
+      "scraped_at": "2025-11-29T19:18:39.821122+00:00"
+    },
+    {
+      "title": "India bonds dip before debt sale; GDP data to guide rate-cut bets",
+      "link": "https://economictimes.indiatimes.com/markets/bonds/india-bonds-dip-before-debt-sale-gdp-data-to-guide-rate-cut-bets/articleshow/125629692.cms",
+      "summary": "Discover bonds that meet your investment goals.",
+      "date": "",
+      "category": "Markets",
+      "source": "https://economictimes.indiatimes.com/markets",
+      "scraped_at": "2025-11-29T19:18:39.859742+00:00"
+    },
+    {
+      "title": "Debt auction, growth data to decide trajectory for India bonds",
+      "link": "https://economictimes.indiatimes.com/markets/bonds/debt-auction-growth-data-to-decide-trajectory-for-india-bonds/articleshow/125628481.cms",
+      "summary": "Discover bonds that meet your investment goals.",
+      "date": "",
+      "category": "Markets",
+      "source": "https://economictimes.indiatimes.com/markets",
+      "scraped_at": "2025-11-29T19:18:39.899145+00:00"
+    },
+    {
+      "title": "Vedanta back in debt market, seeks Rs 2k cr via metals arm",
+      "link": "https://economictimes.indiatimes.com/markets/bonds/vedanta-back-in-debt-market-seeks-rs-2k-cr-via-metals-arm/articleshow/125627563.cms",
+      "summary": "Discover bonds that meet your investment goals.",
+      "date": "",
+      "category": "Markets",
+      "source": "https://economictimes.indiatimes.com/markets",
+      "scraped_at": "2025-11-29T19:18:39.937918+00:00"
+    },
+    {
+      "title": "Aequs IPO opens next week: GMP, price, issue size, other details to know",
+      "link": "https://www.livemint.com/market/ipo/aequs-ipo-opens-next-week-gmp-price-issue-size-other-details-to-know-about-upcoming-ipo-11764427661369.html",
+      "summary": "The Aequs IPO will open for investors on Wednesday, December 3. The bidding process for the initial share sale will close on Friday, December 5.",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.204051+00:00"
+    },
+    {
+      "title": "Mark to MarketView MoreAnalysis of India's top companies",
+      "link": "https://www.livemint.com/market/mark-to-market",
+      "summary": "Stocks to buy for short term: Senco Gold, Vedant Fashions, ABFRL, EaseMyTrip, IHC, Lemon Tree, IXIGI are other seven stocks that experts have suggested to buy",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.344086+00:00"
+    },
+    {
+      "title": "Stock Market News",
+      "link": "https://www.livemint.com/market/stock-market-news",
+      "summary": "Stocks to buy for short term: Senco Gold, Vedant Fashions, ABFRL, EaseMyTrip, IHC, Lemon Tree, IXIGI are other seven stocks that experts have suggested to buy",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.368569+00:00"
+    },
+    {
+      "title": "MCX Commodities",
+      "link": "",
+      "summary": "GOLD Expiry: 05 Dec 2025",
+      "date": "05 Dec 2025",
+      "category": "",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.375323+00:00"
+    },
+    {
+      "title": "Top Mutual Funds",
+      "link": "",
+      "summary": "It is not Elon Musk, but shareholders who have the most to lose if Tesla's chief fails to achieve most of the targets for his $1 trillion pay package, finds a Fortune report.",
+      "date": "",
+      "category": "",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.400055+00:00"
+    },
+    {
+      "title": "Trending Stories",
+      "link": "",
+      "summary": "Log in to our website to save your bookmarks. It'll just take a moment.",
+      "date": "",
+      "category": "",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.436189+00:00"
+    },
+    {
+      "title": "Nifty 50 companies",
+      "link": "",
+      "summary": "Log in to our website to save your bookmarks. It'll just take a moment.",
+      "date": "",
+      "category": "",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.463841+00:00"
+    },
+    {
+      "title": "Premier Energies feels the heat as solar cycle turns tougher",
+      "link": "https://www.livemint.com/market/mark-to-market/premier-energies-solar-cycle-turns-tougher-solar-modules-solar-cells-backward-integration-cell-oversupply-funding-11764312670908.html",
+      "summary": "Stocks to buy for short term: Senco Gold, Vedant Fashions, ABFRL, EaseMyTrip, IHC, Lemon Tree, IXIGI are other seven stocks that experts have suggested to buy",
+      "date": "28 Nov 2025",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.474232+00:00"
+    },
+    {
+      "title": "Cement makers focus on volumes amid flat prices, rising competition",
+      "link": "https://www.livemint.com/market/mark-to-market/india-cement-prices-flat-volume-growth-rising-competition-11764307710318.html",
+      "summary": "Stocks to buy for short term: Senco Gold, Vedant Fashions, ABFRL, EaseMyTrip, IHC, Lemon Tree, IXIGI are other seven stocks that experts have suggested to buy",
+      "date": "28 Nov 2025",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.484007+00:00"
+    },
+    {
+      "title": "Kaynes Tech slumps—but its $1 billion growth push is just beginning",
+      "link": "https://www.livemint.com/market/mark-to-market/kaynes-tech-stock-rs-1-billion-revenue-target-11764224967305.html",
+      "summary": "Stocks to buy for short term: Senco Gold, Vedant Fashions, ABFRL, EaseMyTrip, IHC, Lemon Tree, IXIGI are other seven stocks that experts have suggested to buy",
+      "date": "27 Nov 2025",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.491485+00:00"
+    },
+    {
+      "title": "TCS' tightrope walk: Balancing data centre dreams and brewing lawsuits",
+      "link": "https://www.livemint.com/market/mark-to-market/tcs-share-price-tata-consultancy-services-tcs-ai-tcs-data-centers-google-microsoft-amazon-11764224113168.html",
+      "summary": "Stocks to buy for short term: Senco Gold, Vedant Fashions, ABFRL, EaseMyTrip, IHC, Lemon Tree, IXIGI are other seven stocks that experts have suggested to buy",
+      "date": "27 Nov 2025",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.500900+00:00"
+    },
+    {
+      "title": "These two companies will sell shovels during India's semaglutide gold rush",
+      "link": "https://www.livemint.com/market/mark-to-market/semaglutide-patent-expiry-india-novo-nordisk-ozempic-11764143740562.html",
+      "summary": "Stocks to buy for short term: Senco Gold, Vedant Fashions, ABFRL, EaseMyTrip, IHC, Lemon Tree, IXIGI are other seven stocks that experts have suggested to buy",
+      "date": "26 Nov 2025",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.507924+00:00"
+    },
+    {
+      "title": "Adani Ports' upside surprise hinges on meeting its ambitious port volume target",
+      "link": "https://www.livemint.com/market/mark-to-market/adani-ports-upside-surprise-port-volumes-antique-stock-broking-china-logistics-expansion-mundra-11764139860352.html",
+      "summary": "Stocks to buy for short term: Senco Gold, Vedant Fashions, ABFRL, EaseMyTrip, IHC, Lemon Tree, IXIGI are other seven stocks that experts have suggested to buy",
+      "date": "26 Nov 2025",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.517135+00:00"
+    },
+    {
+      "title": "Tejas crash a dampener for Hindustan Aeronautics?",
+      "link": "https://www.livemint.com/market/mark-to-market/tejas-crash-hindustan-aeronautics-light-combat-aircraft-delivery-schedule-light-utility-helicopter-11764058743435.html",
+      "summary": "Stocks to buy for short term: Senco Gold, Vedant Fashions, ABFRL, EaseMyTrip, IHC, Lemon Tree, IXIGI are other seven stocks that experts have suggested to buy",
+      "date": "25 Nov 2025",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.525350+00:00"
+    },
+    {
+      "title": "Stocks to buy for short term: Titan, Kalyan Jeweller to Nykaa — 10 shares to buy amid wedding season in India",
+      "link": "https://www.livemint.com/market/stock-market-news/stocks-to-buy-for-short-term-titan-kalyan-jeweller-to-nykaa-10-shares-to-buy-amid-wedding-season-in-india-11764411001057.html",
+      "summary": "Stocks to buy for short term: Senco Gold, Vedant Fashions, ABFRL, EaseMyTrip, IHC, Lemon Tree, IXIGI are other seven stocks that experts have suggested to buy",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.551206+00:00"
+    },
+    {
+      "title": "NBFC stock under ₹50 to be in focus on Monday; here's why",
+      "link": "https://www.livemint.com/market/stock-market-news/stock-to-watch-on-monday-nbfc-stock-under-rs-50-to-be-in-focus-on-monday-heres-why-11764392066642.html",
+      "summary": "The Aequs IPO will open for investors on Wednesday, December 3. The bidding process for the initial share sale will close on Friday, December 5.",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.576564+00:00"
+    },
+    {
+      "title": "Stocks to buy under ₹200: Mehul Kothari recommends three stocks to buy or sell",
+      "link": "https://www.livemint.com/market/stock-market-news/stocks-to-buy-under-rs-200-mehul-kothari-of-anand-rathi-recommends-three-stocks-to-buy-or-sell-11764399517643.html",
+      "summary": "The Aequs IPO will open for investors on Wednesday, December 3. The bidding process for the initial share sale will close on Friday, December 5.",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.600085+00:00"
+    },
+    {
+      "title": "Sebi bans Prabhudas Lilladher from new business for seven days over violations",
+      "link": "https://www.livemint.com/market/stock-market-news/sebi-prabhudas-lilladher-new-business-ban-investor-protection-market-risk-violations-11764360421967.html",
+      "summary": "The Aequs IPO will open for investors on Wednesday, December 3. The bidding process for the initial share sale will close on Friday, December 5.",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.624777+00:00"
+    },
+    {
+      "title": "Micron stock is having a stellar year. What Dell, HP reveal about memory demand.",
+      "link": "https://www.livemint.com/market/stock-market-news/micron-stock-is-having-a-stellar-year-what-dell-and-hp-reveal-about-memory-demand-11764397616360.html",
+      "summary": "The Aequs IPO will open for investors on Wednesday, December 3. The bidding process for the initial share sale will close on Friday, December 5.",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.649853+00:00"
+    },
+    {
+      "title": "These are the S&P 500's best and worst stocks in the third quarter",
+      "link": "https://www.livemint.com/market/stock-market-news/these-are-the-s-p-500-s-best-and-worst-stocks-in-the-third-quarter-11764397415589.html",
+      "summary": "The Aequs IPO will open for investors on Wednesday, December 3. The bidding process for the initial share sale will close on Friday, December 5.",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.673697+00:00"
+    },
+    {
+      "title": "Aequs IPO opens next week: GMP, price, issue size, other details to know about upcoming IPO",
+      "link": "https://www.livemint.com/market/ipo/aequs-ipo-opens-next-week-gmp-price-issue-size-other-details-to-know-about-upcoming-ipo-11764427661369.html",
+      "summary": "The Aequs IPO will open for investors on Wednesday, December 3. The bidding process for the initial share sale will close on Friday, December 5.",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.701227+00:00"
+    },
+    {
+      "title": "Meesho IPO vs Vidya Wires IPO vs Aequs IPO — what GMP signals about these IPOs",
+      "link": "https://www.livemint.com/market/ipo/meesho-ipo-vs-vidya-wires-ipo-vs-aequs-ipo-what-gmp-signals-about-upcoming-ipos-11764402190443.html",
+      "summary": "Record low inflation and recent dovish commentary by the Reserve Bank of India chief had boosted expectations of a rate cut in recent days, but a stronger growth print means that policy easing could be delayed.",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.723200+00:00"
+    },
+    {
+      "title": "SSMD Agrotech India IPO allotment likely today: Here's how to check",
+      "link": "https://www.livemint.com/market/ipo/ssmd-agrotech-india-ipo-allotment-likely-today-check-latest-gmp-step-by-step-guide-on-how-to-check-allotment-status-11764340732282.html",
+      "summary": "Record low inflation and recent dovish commentary by the Reserve Bank of India chief had boosted expectations of a rate cut in recent days, but a stronger growth print means that policy easing could be delayed.",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.746932+00:00"
+    },
+    {
+      "title": "IPO wave shows a shift in retail investors' behaviour: Scripbox CEO",
+      "link": "https://www.livemint.com/market/ipo/ipo-wave-shows-a-shift-in-retail-investors-behaviour-investing-solely-for-listing-gains-may-hurt-scripbox-ceo-11764332729852.html",
+      "summary": "Record low inflation and recent dovish commentary by the Reserve Bank of India chief had boosted expectations of a rate cut in recent days, but a stronger growth print means that policy easing could be delayed.",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.769597+00:00"
+    },
+    {
+      "title": "IPO fatigue overdone? Most November listings deliver gains, 3 below issue price",
+      "link": "https://www.livemint.com/market/ipo/ipo-fatigue-overdone-most-november-listings-deliver-gains-just-3-trade-below-issue-price-11764322151276.html",
+      "summary": "Record low inflation and recent dovish commentary by the Reserve Bank of India chief had boosted expectations of a rate cut in recent days, but a stronger growth print means that policy easing could be delayed.",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.796133+00:00"
+    },
+    {
+      "title": "Meesho IPO GMP today signals robust premium ahead of the issue opening date",
+      "link": "https://www.livemint.com/market/ipo/meesho-ipo-gmp-meesho-ipo-date-meesho-ipo-price-meesho-ipo-details-meesho-ipo-price-band-meesho-ipo-size-meesho-11764318203336.html",
+      "summary": "Record low inflation and recent dovish commentary by the Reserve Bank of India chief had boosted expectations of a rate cut in recent days, but a stronger growth print means that policy easing could be delayed.",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.819007+00:00"
+    },
+    {
+      "title": "Indian bonds slide as strong GDP growth print temper RBI rate cut expectations",
+      "link": "https://www.livemint.com/market/bonds/indian-bonds-slide-as-strong-gdp-growth-print-temper-rbi-rate-cut-expectations-11764332012805.html",
+      "summary": "Record low inflation and recent dovish commentary by the Reserve Bank of India chief had boosted expectations of a rate cut in recent days, but a stronger growth print means that policy easing could be delayed.",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.841908+00:00"
+    },
+    {
+      "title": "How to make the most of bond market's demand-supply mismatch? Experts weigh in",
+      "link": "https://www.livemint.com/market/bonds/how-to-make-the-most-of-bond-market-s-demand-supply-mismatch-experts-weigh-in-11764331408523.html",
+      "summary": "OIL-OPEC/ (PIX):OPEC set to hold oil output policy steady on Sunday, sources say",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.866362+00:00"
+    },
+    {
+      "title": "AT-1 bonds are staging a comeback with Canara Bank",
+      "link": "https://www.livemint.com/market/bonds/at1-bonds-staging-comeback-canara-bank-bond-issuance-11764302858020.html",
+      "summary": "OIL-OPEC/ (PIX):OPEC set to hold oil output policy steady on Sunday, sources say",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.888755+00:00"
+    },
+    {
+      "title": "A hint of exiting Tata Sons is making SP Group hopeful in bond street",
+      "link": "https://www.livemint.com/companies/news/shapoorji-pallonji-group-hopes-soft-stance-tata-trusts-sons-to-allow-cheaper-bond-sale-goswami-infratech-11764160715074.html",
+      "summary": "OIL-OPEC/ (PIX):OPEC set to hold oil output policy steady on Sunday, sources say",
+      "date": "",
+      "category": "Companies",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.913373+00:00"
+    },
+    {
+      "title": "Flood of AI bonds adds to pressure on markets",
+      "link": "https://www.livemint.com/market/bonds/ai-bonds-ai-hyperscalers-amazon-alphabet-meta-11763986121841.html",
+      "summary": "OIL-OPEC/ (PIX):OPEC set to hold oil output policy steady on Sunday, sources say",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.937018+00:00"
+    },
+    {
+      "title": "Why private credit is becoming India's alternative power play",
+      "link": "https://www.livemint.com/market/bonds/not-all-alternatives-are-equal-why-private-credit-is-becoming-india-s-alternative-power-play-11763968625256.html",
+      "summary": "OIL-OPEC/ (PIX):OPEC set to hold oil output policy steady on Sunday, sources say",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.959787+00:00"
+    },
+    {
+      "title": "How you can invest in bonds on online bond platforms",
+      "link": "https://www.livemint.com/money/personal-finance/online-bond-platforms-reshaping-retail-investing-kyc-investors-rfq-trades-sebi-11763871660573.html",
+      "summary": "OIL-OPEC/ (PIX):OPEC set to hold oil output policy steady on Sunday, sources say",
+      "date": "",
+      "category": "Money",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:45.985760+00:00"
+    },
+    {
+      "title": "OPEC set to hold oil output policy steady on Sunday, sources say",
+      "link": "https://www.livemint.com/market/commodities/opec-set-to-hold-oil-output-policy-steady-on-sunday-sources-say-11764433881227.html",
+      "summary": "OIL-OPEC/ (PIX):OPEC set to hold oil output policy steady on Sunday, sources say",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:46.010281+00:00"
+    },
+    {
+      "title": "Gold prices today: How much does 24K, 22K gold cost in your city on November 29?",
+      "link": "https://www.livemint.com/market/commodities/gold-prices-today-how-much-does-24k-22k-gold-cost-in-mumbai-delhi-bengaluru-and-other-cities-on-nov-29-check-here-11764379407795.html",
+      "summary": "The Sebi move aims to deepen the market and bring India closer to global classification norms.",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:46.034552+00:00"
+    },
+    {
+      "title": "Silver, Copper Hit Records as Trading Turmoil Exacerbates Moves",
+      "link": "https://www.livemint.com/market/commodities/silver-copper-hit-records-as-trading-turmoil-exacerbates-moves-11764363770455.html",
+      "summary": "The Sebi move aims to deepen the market and bring India closer to global classification norms.",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:46.056323+00:00"
+    },
+    {
+      "title": "MF, SIF exposure to REITs to be classified as equity investments from 1 January",
+      "link": "https://www.livemint.com/market/stock-market-news/sebi-reit-equity-classification-mutual-fund-sif-investment-rules-11764334126796.html",
+      "summary": "The Sebi move aims to deepen the market and bring India closer to global classification norms.",
+      "date": "28 Nov 2025",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:46.065598+00:00"
+    },
+    {
+      "title": "Sebi introduces additional incentives for MF distributors to boost participation",
+      "link": "https://www.livemint.com/mutual-fund/mf-news/sebi-mutual-fund-distributor-incentives-women-b30-cities-investors-commission-11764254894427.html",
+      "summary": "It is not Elon Musk, but shareholders who have the most to lose if Tesla's chief fails to achieve most of the targets for his $1 trillion pay package, finds a Fortune report.",
+      "date": "27 Nov 2025",
+      "category": "Mutual Fund",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:46.073954+00:00"
+    },
+    {
+      "title": "Flexi-cap funds take the spotlight as small- and mid-caps falter",
+      "link": "https://www.livemint.com/market/flexi-cap-funds-gain-investors-pull-back-from-small-and-mid-caps-11764127893150.html",
+      "summary": "It is not Elon Musk, but shareholders who have the most to lose if Tesla's chief fails to achieve most of the targets for his $1 trillion pay package, finds a Fortune report.",
+      "date": "26 Nov 2025",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:46.082155+00:00"
+    },
+    {
+      "title": "Amfi seeks decade-long trading data as Sebi weighs cap on brokerage fees",
+      "link": "https://www.livemint.com/mutual-fund/amfi-seeks-decade-long-trading-data-as-sebi-weighs-cap-on-brokerage-fees-11763791857895.html",
+      "summary": "It is not Elon Musk, but shareholders who have the most to lose if Tesla's chief fails to achieve most of the targets for his $1 trillion pay package, finds a Fortune report.",
+      "date": "22 Nov 2025",
+      "category": "Mutual Fund",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:46.088839+00:00"
+    },
+    {
+      "title": "Not Elon Musk, Tesla shareholders lose if he doesn't achieve $1trn pay promises",
+      "link": "https://www.livemint.com/companies/people/not-elon-musk-shareholders-have-most-to-lose-if-the-tesla-chief-fails-to-achieve-milestones-of-1-trillion-pay-package-11764432842935.html",
+      "summary": "It is not Elon Musk, but shareholders who have the most to lose if Tesla's chief fails to achieve most of the targets for his $1 trillion pay package, finds a Fortune report.",
+      "date": "",
+      "category": "Companies",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:46.109787+00:00"
+    },
+    {
+      "title": "GOLD Expiry: 05 Dec 2025",
+      "link": "https://www.livemint.com/market/market-stats/commodity-mcx-gold-price",
+      "summary": "SILVER Expiry: 05 Dec 2025",
+      "date": "05 Dec 2025",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:48.637011+00:00"
+    },
+    {
+      "title": "SILVER Expiry: 05 Dec 2025",
+      "link": "https://www.livemint.com/market/market-stats/commodity-mcx-silver-price",
+      "summary": "COPPER Expiry: 28 Nov 2025",
+      "date": "05 Dec 2025",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:48.645075+00:00"
+    },
+    {
+      "title": "More From Commodities",
+      "link": "https://www.livemint.com/market/commodities",
+      "summary": "The Sebi move aims to deepen the market and bring India closer to global classification norms.",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:48.680613+00:00"
+    },
+    {
+      "title": "Motilal Oswal Large Cap Fund Regular Growth",
+      "link": "https://www.livemint.com/market/market-stats/mutual-funds-motilal-oswal-large-cap-fund-regular-growth-mf016356",
+      "summary": "It is not Elon Musk, but shareholders who have the most to lose if Tesla's chief fails to achieve most of the targets for his $1 trillion pay package, finds a Fortune report.",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:48.704060+00:00"
+    },
+    {
+      "title": "DSP Nifty 50 Equal Weight Index Fund Growth",
+      "link": "https://www.livemint.com/market/market-stats/mutual-funds-dsp-nifty-50-equal-weight-index-fund-growth-mf006210",
+      "summary": "It is not Elon Musk, but shareholders who have the most to lose if Tesla's chief fails to achieve most of the targets for his $1 trillion pay package, finds a Fortune report.",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:48.730622+00:00"
+    },
+    {
+      "title": "ICICI Prudential Large Cap Fund Growth",
+      "link": "https://www.livemint.com/market/market-stats/mutual-funds-icici-prudential-large-cap-fund-growth-mf004279",
+      "summary": "It is not Elon Musk, but shareholders who have the most to lose if Tesla's chief fails to achieve most of the targets for his $1 trillion pay package, finds a Fortune report.",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:48.753847+00:00"
+    },
+    {
+      "title": "Quantum Nifty 50 ETF Fund of Fund Regular Growth",
+      "link": "https://www.livemint.com/market/market-stats/mutual-funds-quantum-nifty-50-etf-fund-of-fund-regular-growth-mf014622",
+      "summary": "It is not Elon Musk, but shareholders who have the most to lose if Tesla's chief fails to achieve most of the targets for his $1 trillion pay package, finds a Fortune report.",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:48.775898+00:00"
+    },
+    {
+      "title": "More From Mutual Funds",
+      "link": "https://www.livemint.com/mutual-fund",
+      "summary": "It is not Elon Musk, but shareholders who have the most to lose if Tesla's chief fails to achieve most of the targets for his $1 trillion pay package, finds a Fortune report.",
+      "date": "",
+      "category": "",
+      "source": "https://www.livemint.com/market",
+      "scraped_at": "2025-11-29T19:18:48.802522+00:00"
+    },
+    {
+      "title": "TSX notches seventh straight monthly gain as precious metals climb 1 min read . 29 Nov 2025 Reuters CANADA-STOCKS/ (UPDATE 2):CANADA STOCKS-TSX notches seventh straight monthly gain as precious metals climb",
+      "link": "",
+      "summary": "CANADA-STOCKS/ (UPDATE 2):CANADA STOCKS-TSX notches seventh straight monthly gain as precious metals climb",
+      "date": "29 Nov 2025",
+      "category": "Market",
+      "source": "https://www.livemint.com/market/page-2",
+      "scraped_at": "2025-11-29T19:18:51.388396+00:00"
+    },
+    {
+      "title": "TSX notches seventh straight monthly gain as precious metals climb",
+      "link": "https://www.livemint.com/market/stock-market-news/tsx-notches-seventh-straight-monthly-gain-as-precious-metals-climb-11764365245637.html",
+      "summary": "CANADA-STOCKS/ (UPDATE 2):CANADA STOCKS-TSX notches seventh straight monthly gain as precious metals climb",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.livemint.com/market/page-2",
+      "scraped_at": "2025-11-29T19:18:51.517506+00:00"
+    },
+    {
+      "title": "Upcoming IPOs next week: Meesho to Aequs – 3 mainboard issues, 8 SME IPOs and 6 listings on the radar",
+      "link": "https://www.financialexpress.com/market/ipo-news-upcoming-ipos-next-week-meesho-to-aequs-3-mainboard-issues-8-sme-ipos-and-6-listings-on-the-radar-4059935/",
+      "summary": "",
+      "date": "",
+      "category": "Market",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:54.724767+00:00"
+    },
+    {
+      "title": "Bitcoin eyes $100K comeback after 36% crash — Key factors fueling the rebound",
+      "link": "https://www.financialexpress.com/market/cryptocurrency/bitcoin-eyes-100k-comeback-after-36-crash-key-factors-fueling-the-rebound/4059940/",
+      "summary": "Bitcoin's 36% drop may have cleared the way for a major rebound, with BTIG saying the token could rally back…",
+      "date": "2025-11-29T09:28:34",
+      "category": "Market",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:54.735670+00:00"
+    },
+    {
+      "title": "10 stocks with up to 36% upside – Top brokerage Buys this week",
+      "link": "https://www.financialexpress.com/market/top-brokerage-stocks-buy-nifty-high-axis-bank-lenskart-premier-energies-4059164/",
+      "summary": "Discover top brokerage picks for 10 stocks with up to 36% upside; explore buy recommendations and growth drivers now!",
+      "date": "2025-11-29T07:00:00",
+      "category": "Market",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:54.743769+00:00"
+    },
+    {
+      "title": "The “Brains” behind the BrahMos: The hidden company building India's defence electronics",
+      "link": "https://www.financialexpress.com/market/stock-insights/the-brains-behind-the-brahmos-the-hidden-company-building-indias-defence-electronics/4059522/",
+      "summary": "Data Patterns is quietly becoming India's defense-tech IP foundry — a place where classified ideas turn into hardware. Few investors…",
+      "date": "2025-11-29T05:30:00",
+      "category": "Market",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:54.753897+00:00"
+    },
+    {
+      "title": "Beyond the Giants: 3 hidden small-caps powering India's AI & Data Centre boom",
+      "link": "https://www.financialexpress.com/market/stock-insights/beyond-the-giants-3-hidden-small-caps-powering-indias-ai-amp-data-centre-boom/4059549/",
+      "summary": "India's data centre capacity is set to grow 5x to 8 GW by 2030, driven by AI, cloud and digital…",
+      "date": "2025-11-29T05:25:00",
+      "category": "Market",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:54.763068+00:00"
+    },
+    {
+      "title": "Down 37%: Are these 2 “super investor” smallcaps now a scream buy?",
+      "link": "https://www.financialexpress.com/market/stock-insights/down-37-are-these-2-super-investor-smallcaps-now-a-scream-buy/4059536/",
+      "summary": "This Super investor added 2 new smallcap stocks to her portfolio in the last 12 months. But the stocks are…",
+      "date": "2025-11-29T05:20:00",
+      "category": "Market",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:54.771188+00:00"
+    },
+    {
+      "title": "Forget Gold: Silver is the new king with a staggering 94% surge",
+      "link": "https://www.financialexpress.com/market/gold-pulse/forget-gold-silver-is-the-new-king-with-a-staggering-92-surge/4059631/",
+      "summary": "Silver has quietly outpaced gold in 2025, delivering stronger gains without attracting the same spotlight as the yellow metal.",
+      "date": "2025-11-29T17:13:56",
+      "category": "Market",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:54.781016+00:00"
+    },
+    {
+      "title": "Sebi bans DroneAcharya and its promoters for up to two years, imposes ₹75 lakh penalty",
+      "link": "https://www.financialexpress.com/market/sebi-bans-droneacharya-and-its-promoters-for-up-to-two-years-imposes-75-lakh-penalty-4059735/",
+      "summary": "Sebi restrained DroneAcharya Aerial Innovations, Prateek Srivastava, Nikita Srivastava, Instafin Financial Advisors LLP and Sandeep Ghate from accessing the securities…",
+      "date": "2025-11-29T03:47:26",
+      "category": "Market",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:54.789480+00:00"
+    },
+    {
+      "title": "Meesho announces IPO at Rs 50,000-crore valuation",
+      "link": "https://www.financialexpress.com/market/meesho-announces-ipo-at-rs-50000-crore-valuation-4059756/",
+      "summary": "The company is focused on simplicity and using AI for India-specific problems, including a unique ROI-based advertising model and real-time…",
+      "date": "2025-11-29T01:13:52",
+      "category": "Market",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:54.798238+00:00"
+    },
+    {
+      "title": "Reduce exposure in small caps, shift to large caps",
+      "link": "https://www.financialexpress.com/market/reduce-exposure-in-small-caps-shift-to-large-caps-4059688/",
+      "summary": "Five-year dream run of mid and small caps may be on its last legs",
+      "date": "2025-11-28T23:34:26",
+      "category": "Market",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:54.806345+00:00"
+    },
+    {
+      "title": "Rupee hits new low at 89.45",
+      "link": "https://www.financialexpress.com/market/rupee-hits-new-low-at-89-45-4059667/",
+      "summary": "RBI intervention protected the 89.50 level, but the currency remains vulnerable, with analysts predicting a near-term range of 89.25–90.",
+      "date": "2025-11-28T23:04:01",
+      "category": "Market",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:54.817173+00:00"
+    },
+    {
+      "title": "GAIL stock slides as tariff hike lags expectations",
+      "link": "https://www.financialexpress.com/market/gail-stock-slides-as-tariff-hike-lags-expectations-4059656/",
+      "summary": "This rate is lower than GAIL's request, as the PNGRB deferred the full true-up of costs and capex to FY28…",
+      "date": "2025-11-28T22:57:45",
+      "category": "Market",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:54.824793+00:00"
+    },
+    {
+      "title": "Indices extend winning streak for third consecutive week",
+      "link": "https://www.financialexpress.com/market/indices-extend-winning-streak-for-third-consecutive-weeknbsp-4059644/",
+      "summary": "Experts say the better-than-expected Q2 GDP data should support market sentiment in the near term",
+      "date": "2025-11-28T22:38:00",
+      "category": "Market",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:54.834485+00:00"
+    },
+    {
+      "title": "December series starts off on a positive note",
+      "link": "https://www.financialexpress.com/market/december-series-starts-off-on-a-positive-note-4059615/",
+      "summary": "The Nifty 50 hit a lifetime high of 26,310, surpassing the crucial 26,000 mark at the start of the December…",
+      "date": "2025-11-28T22:07:20",
+      "category": "Market",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:54.841904+00:00"
+    },
+    {
+      "title": "Nifty Next 50 ETFs give early exposure to future mega-cap leaders",
+      "link": "https://www.financialexpress.com/market/nifty-next-50-etfs-give-early-exposure-to-future-mega-cap-leaders-4059595/",
+      "summary": "For long-term index investors, this works as an effective stock-diversifier",
+      "date": "2025-11-28T21:46:23",
+      "category": "Market",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:54.851768+00:00"
+    },
+    {
+      "title": "Sebi reclassifies REITs as equity instruments to boost market participation from 2026",
+      "link": "https://www.financialexpress.com/market/sebi-reclassifies-reits-as-equity-instruments-to-boost-market-participationnbspfromnbsp2026-4059460/",
+      "summary": "Existing REIT investments held by debt schemes and SIF strategies as of December 31, 2025, will be grandfathered, though AMCs…",
+      "date": "2025-11-28T19:38:07",
+      "category": "Market",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:54.859870+00:00"
+    },
+    {
+      "title": "Kotak Mahindra-IDBI Bank merger possibility? Jefferies outlines key scenarios and what it means",
+      "link": "https://www.financialexpress.com/business/industry/kotak-mahindra-idbi-bank-merger-possibility-jefferies-outlines-key-scenarios-and-what-it-means/4059344/",
+      "summary": "Jefferies outlines possible Kotak Mahindra–IDBI Bank merger structures, modeling share-swap and cash-funded scenarios with insights on capital inflow, risks, and…",
+      "date": "2025-11-28T21:16:48",
+      "category": "Business",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:54.876933+00:00"
+    },
+    {
+      "title": "Rupee ends week near record lows at 89.46/$",
+      "link": "https://www.financialexpress.com/market/rupee-ends-week-near-record-lows-at-89-46-4059331/",
+      "summary": "Rupee ends near record low at 89.47 against the US dollar. RBI intervenes to help limit further declines",
+      "date": "2025-11-28T17:52:55",
+      "category": "Market",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:54.887061+00:00"
+    },
+    {
+      "title": "Jefferies top 11 banking stocks with up to 33% upside potential",
+      "link": "https://www.financialexpress.com/market/jefferies-top-11-banking-stocks-hdfc-icici-axis-kotak-sbi-bandhan-among-key-buys-with-up-to-33-upside-potential-4059175/",
+      "summary": "Jefferies' latest report identifies 11 bank stocks including HDFC, ICICI, Axis, SBI, and Bandhan with strong upside potential led by…",
+      "date": "2025-11-28T16:14:08",
+      "category": "Market",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:54.896134+00:00"
+    },
+    {
+      "title": "Markets end flat but Nifty manages to close above 26,200; Financials under pressure – Key highlights",
+      "link": "https://www.financialexpress.com/market/markets-end-flat-but-nifty-manages-to-close-above-26200-financials-under-pressure-key-highlights-4059155/",
+      "summary": "Sensex and Nifty end flat as investors await global cues; explore key stock gainers and movers from today's market session.",
+      "date": "2025-11-28T15:41:07",
+      "category": "Market",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:54.904948+00:00"
+    },
+    {
+      "title": "Meesho IPO 2025: Will the Rs 5,421 crore offer break records? Check all key details",
+      "link": "https://www.financialexpress.com/market/ipo-news-meesho-ipo-set-to-disrupt-e-commerce-will-the-rs-5421-crore-offer-break-records-check-all-key-details-4059121/",
+      "summary": "Meesho IPO: Check here for the Meesho IPO issue size, price band, opening/closing date, subscription details, objectives, key risks, financials,…",
+      "date": "2025-11-29T18:35:45",
+      "category": "Market",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:54.915725+00:00"
+    },
+    {
+      "title": "Vidya Wires IPO opens on December 3: 5 critical details every investor must know before subscribing",
+      "link": "https://www.financialexpress.com/market/ipo-news-vidya-wires-ipo-opens-on-december-3-5-critical-details-every-investor-must-know-before-subscribing-4059095/",
+      "summary": "",
+      "date": "2025-11-28T14:28:16",
+      "category": "Market",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:54.924346+00:00"
+    },
+    {
+      "title": "Cyclone Ditwah: After IMD red alert, Air India warns of possible flight disruptions",
+      "link": "https://www.financialexpress.com/india-news/cyclone-ditwah-after-imd-red-alert-air-india-warns-of-possible-flight-disruptions/4060384/",
+      "summary": "",
+      "date": "",
+      "category": "India News",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:54.943498+00:00"
+    },
+    {
+      "title": "Lenskart profit rises 20% to Rs 104 crore in Q2",
+      "link": "https://www.financialexpress.com/business/news/lenskart-profit-rises-20nbspto-rs-104-crore-in-q2/4060394/",
+      "summary": "",
+      "date": "",
+      "category": "Business",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:54.965085+00:00"
+    },
+    {
+      "title": "‘Politics trumps economics in this era': Jaishankar warns of shifting global power dynamics",
+      "link": "https://www.financialexpress.com/india-news/politics-trumps-economics-in-this-era-jaishankar-warns-of-shifting-global-power-dynamics/4060361/",
+      "summary": "",
+      "date": "",
+      "category": "India News",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:55.026165+00:00"
+    },
+    {
+      "title": "In pictures: SRK, Aishwarya, Salman, Rekha and more attend Dharmendra's emotional memorial in Mumbai",
+      "link": "https://www.financialexpress.com/photos/lifestyle-gallery/4058950/in-pictures-srk-aishwarya-salman-rekha-and-more-attend-dharmendras-emotional-memorial-in-mumbai/",
+      "summary": "",
+      "date": "2025-11-28T12:11:14",
+      "category": "Photos",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:55.037032+00:00"
+    },
+    {
+      "title": "Hema Malini unlocks rare memories of Dharmendra; shares never-seen pictures of the late actor",
+      "link": "https://www.financialexpress.com/photos/lifestyle-gallery/4058162/hema-malini-unlocks-rare-memories-of-dharmendra-shares-never-seen-pictures-of-the-late-actor/",
+      "summary": "",
+      "date": "2025-11-27T17:22:53",
+      "category": "Photos",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:55.047596+00:00"
+    },
+    {
+      "title": "Dharmendra passes away at 89: A look back at his iconic roles",
+      "link": "https://www.financialexpress.com/photos/lifestyle-gallery/4054327/dharmendra-passes-away-at-89-a-look-back-at-his-iconic-roles/",
+      "summary": "",
+      "date": "2025-11-24T16:24:16",
+      "category": "Photos",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:55.057265+00:00"
+    },
+    {
+      "title": "Archana Chettiar",
+      "link": "https://www.financialexpress.com/author/archana-chettiar/",
+      "summary": "India's data centre capacity is set to grow 5x to 8 GW by 2030, driven by AI, cloud and digital…",
+      "date": "",
+      "category": "Author",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:56.819115+00:00"
+    },
+    {
+      "title": "Christina Titus",
+      "link": "https://www.financialexpress.com/author/christina-titus/",
+      "summary": "This rate is lower than GAIL's request, as the PNGRB deferred the full true-up of costs and capex to FY28…",
+      "date": "",
+      "category": "Author",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:56.840375+00:00"
+    },
+    {
+      "title": "Arunima Bharadwaj",
+      "link": "https://www.financialexpress.com/author/arunima-bharadwaj/",
+      "summary": "Experts say the better-than-expected Q2 GDP data should support market sentiment in the near term",
+      "date": "",
+      "category": "Author",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:56.860340+00:00"
+    },
+    {
+      "title": "Shivangini Gupta",
+      "link": "https://www.financialexpress.com/author/shivangini/",
+      "summary": "Rupee ends near record low at 89.47 against the US dollar. RBI intervenes to help limit further declines",
+      "date": "",
+      "category": "Author",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:56.880996+00:00"
+    },
+    {
+      "title": "Oliviya Kunjumon",
+      "link": "https://www.financialexpress.com/author/oliviya-kunjumon/",
+      "summary": "Meesho IPO: Check here for the Meesho IPO issue size, price band, opening/closing date, subscription details, objectives, key risks, financials,…",
+      "date": "",
+      "category": "Author",
+      "source": "https://www.financialexpress.com/market/",
+      "scraped_at": "2025-11-29T19:18:56.902696+00:00"
+    },
+    {
+      "title": "Business Daily meets: Wikipedia's Jimmy Wales",
+      "link": "",
+      "summary": "Argentina hopes that an oil and gas boom can benefit the whole country.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.401537+00:00"
+    },
+    {
+      "title": "What makes a basketball team worth $10bn?",
+      "link": "",
+      "summary": "Argentina hopes that an oil and gas boom can benefit the whole country.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.420535+00:00"
+    },
+    {
+      "title": "The cocoa conundrum",
+      "link": "",
+      "summary": "Argentina hopes that an oil and gas boom can benefit the whole country.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.438341+00:00"
+    },
+    {
+      "title": "Is this the end for South East Asia's scam centres?",
+      "link": "",
+      "summary": "Argentina hopes that an oil and gas boom can benefit the whole country.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.457320+00:00"
+    },
+    {
+      "title": "What's next for USAID funded projects?",
+      "link": "",
+      "summary": "Argentina hopes that an oil and gas boom can benefit the whole country.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.497526+00:00"
+    },
+    {
+      "title": "Is cricket financially healthy?",
+      "link": "",
+      "summary": "Argentina hopes that an oil and gas boom can benefit the whole country.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.518623+00:00"
+    },
+    {
+      "title": "A special interview with Google CEO Sundar Pichai",
+      "link": "",
+      "summary": "Argentina hopes that an oil and gas boom can benefit the whole country.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.538745+00:00"
+    },
+    {
+      "title": "Tyler Perry: Homeless to Hollywood entrepreneur",
+      "link": "",
+      "summary": "Argentina hopes that an oil and gas boom can benefit the whole country.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.556147+00:00"
+    },
+    {
+      "title": "Can global shipping go green?",
+      "link": "",
+      "summary": "Argentina hopes that an oil and gas boom can benefit the whole country.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.572992+00:00"
+    },
+    {
+      "title": "Planes grounded after Airbus discovers solar radiation could impact systems",
+      "link": "",
+      "summary": "The issue is thought to affect 6,000 planes, which will need to undergo an urgent software update or have computers replaced.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.592454+00:00"
+    },
+    {
+      "title": "'Business rates changes will cost me £62,000'",
+      "link": "",
+      "summary": "Pub bosses have warned they face a sharp rise in business rates bills despite government support.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.614769+00:00"
+    },
+    {
+      "title": "The card scam causing 'real harm' to UK businesses",
+      "link": "",
+      "summary": "Businesses report a rise in scams where customers raise a credit card dispute and get a refund.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.636685+00:00"
+    },
+    {
+      "title": "Olivia Dean wins refunds for fans after criticising Ticketmaster",
+      "link": "",
+      "summary": "The pop star took action after tickets for her US tour were resold for 14 times their original cost.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.662159+00:00"
+    },
+    {
+      "title": "Seized luxury goods reveal scale of UK text scams",
+      "link": "",
+      "summary": "The tactics and spoils of smishing - scam texts that trick people into disclosing data - are revealed.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.680735+00:00"
+    },
+    {
+      "title": "Why the rich and powerful couldn't say no to Epstein",
+      "link": "",
+      "summary": "The late sex offender maintained contact with wealthy and influential people even after his first conviction.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.699604+00:00"
+    },
+    {
+      "title": "No 10 denies Reeves misled public in run-up to Budget",
+      "link": "",
+      "summary": "The Conservatives say she was overly gloomy about the public finances as a \"smokescreen\" to raise tax.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.718575+00:00"
+    },
+    {
+      "title": "Good Bad Billionaire",
+      "link": "",
+      "summary": "Argentina hopes that an oil and gas boom can benefit the whole country.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.752257+00:00"
+    },
+    {
+      "title": "World of Business",
+      "link": "",
+      "summary": "Argentina hopes that an oil and gas boom can benefit the whole country.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.769377+00:00"
+    },
+    {
+      "title": "Fracking has transformed an Argentine town, but what about the nation?",
+      "link": "",
+      "summary": "Argentina hopes that an oil and gas boom can benefit the whole country.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.788821+00:00"
+    },
+    {
+      "title": "Machu Picchu hit by a row over tourist buses",
+      "link": "",
+      "summary": "Protests have taken place over the coaches that take visitors up to the world heritage site in Peru.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.804558+00:00"
+    },
+    {
+      "title": "NYSE Opening Bell",
+      "link": "",
+      "summary": "Assistant treasury manager Claire Walsh admits abusing her role to obtain the money over four years.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.820984+00:00"
+    },
+    {
+      "title": "New AI chip threatens Nvidia supremacy",
+      "link": "",
+      "summary": "Assistant treasury manager Claire Walsh admits abusing her role to obtain the money over four years.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.839007+00:00"
+    },
+    {
+      "title": "Technology of Business",
+      "link": "",
+      "summary": "Assistant treasury manager Claire Walsh admits abusing her role to obtain the money over four years.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.856092+00:00"
+    },
+    {
+      "title": "Will boats be a breakthrough for 3D printing tech?",
+      "link": "",
+      "summary": "Assistant treasury manager Claire Walsh admits abusing her role to obtain the money over four years.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.877174+00:00"
+    },
+    {
+      "title": "Chelsea employee admits £200,000 club fraud",
+      "link": "",
+      "summary": "Assistant treasury manager Claire Walsh admits abusing her role to obtain the money over four years.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.892458+00:00"
+    },
+    {
+      "title": "Carney's new Alberta oil pipeline deal already faces opposition",
+      "link": "",
+      "summary": "The deal comes as Canada seeks to diversify oil exports away from the US but has led to the resignation of a minister and environmentalist from Carney's cabinet.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.911097+00:00"
+    },
+    {
+      "title": "Barcelona distances itself from sponsor's cryptocurrency after backlash",
+      "link": "",
+      "summary": "Experts say the deal may put fans at risk as the Catalan club tries to relieve its financial woes.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.928061+00:00"
+    },
+    {
+      "title": "Louvre to hike ticket prices for most non-EU tourists by 45%",
+      "link": "",
+      "summary": "The price increase is expected to raise millions to fund the museum's renovation plans.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.944300+00:00"
+    },
+    {
+      "title": "Reform or rights rollback? India's sweeping labour law overhaul sparks debate",
+      "link": "",
+      "summary": "Companies have given the changes a thumbs-up but trade unions say the laws further weaken worker rights.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:02.983389+00:00"
+    },
+    {
+      "title": "Why you must share your idea and get honest feedback",
+      "link": "",
+      "summary": "Learn Steven's three crucial steps for validating your business proposal and why impartial feedback is vital.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:03.001841+00:00"
+    },
+    {
+      "title": "The power of making and owning decisions",
+      "link": "",
+      "summary": "Learn why making your own decisions is the key to increasing your confidence.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:03.021121+00:00"
+    },
+    {
+      "title": "The power of absorbing information",
+      "link": "",
+      "summary": "Learn how to listen to improve your self-awareness. People will give you information, and that's power.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:03.037037+00:00"
+    },
+    {
+      "title": "Why planning can be a form of procrastination",
+      "link": "",
+      "summary": "Learn how to avoid compulsive planning and instead hold plans loosely as a navigational aid.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:03.054706+00:00"
+    },
+    {
+      "title": "The difference between 'good' and 'bad' procrastination",
+      "link": "",
+      "summary": "Forget trying to stop procrastinating. Instead, learn Oliver's three rules to become a better procrastinator.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:03.090496+00:00"
+    },
+    {
+      "title": "Why 'inbox zero' is a strategy that breeds distraction",
+      "link": "",
+      "summary": "Managing infinite emails, ideas, errands, and goals is hard. Oliver recommends a little strategic neglect.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:03.106310+00:00"
+    },
+    {
+      "title": "How time creates problems, especially when it is so limited",
+      "link": "",
+      "summary": "Discover why so many of our struggles are down to poor time management and denial of its finitude.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:03.122961+00:00"
+    },
+    {
+      "title": "Why sustainable productivity will drive success",
+      "link": "",
+      "summary": "Steven shares his three 'M' goal-setting framework to help you be more productive for the long-term.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:03.139359+00:00"
+    },
+    {
+      "title": "How to hire the best people for your team",
+      "link": "",
+      "summary": "Are they a bar raiser, bar maintainer or bar lowerer? Learn how to build a team that can get behind your mission.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:03.159885+00:00"
+    },
+    {
+      "title": "What is your business culture and why is it so important?",
+      "link": "",
+      "summary": "Explore how you can use your mission to set the right culture for your business.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:03.176139+00:00"
+    },
+    {
+      "title": "How to know yourself, grow yourself, and take control",
+      "link": "",
+      "summary": "Find out how to counteract limiting beliefs you hold about yourself and build new ones that serve you better.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:03.198581+00:00"
+    },
+    {
+      "title": "How to get the money you need to start a business",
+      "link": "",
+      "summary": "Learn how to start a business with nothing in the bank and how to get funding if you need it to get started.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:03.215230+00:00"
+    },
+    {
+      "title": "Why you should start a business and why to start it now",
+      "link": "",
+      "summary": "Steven explains the common obstacles to starting a business and why now is the time to start yours.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:03.232692+00:00"
+    },
+    {
+      "title": "How to choose what matters most in life",
+      "link": "",
+      "summary": "Learn three big questions to ask yourself to zero in on what matters and what you should spend time on.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:03.250528+00:00"
+    },
+    {
+      "title": "More in Business",
+      "link": "",
+      "summary": "Discounts often aren't the cheapest prices, but here's how to make sure you're getting value for money.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:03.269474+00:00"
+    },
+    {
+      "title": "Black Friday: Buy loo roll and keep the receipt to get a good deal",
+      "link": "",
+      "summary": "Discounts often aren't the cheapest prices, but here's how to make sure you're getting value for money.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:03.288964+00:00"
+    },
+    {
+      "title": "Tesla looks to reset strategy amid sluggish India sales",
+      "link": "",
+      "summary": "The EV maker has sold just over 100 cars in India since its much publicised debut in July this year.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:03.325984+00:00"
+    },
+    {
+      "title": "Venezuela bans six major airlines after tensions with US escalate",
+      "link": "",
+      "summary": "The affected carriers ceased flying to Venezuela after the US warned of heightened military activity.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:03.348619+00:00"
+    },
+    {
+      "title": "South Africa hits back after Trump says US won't invite it for G20 next year",
+      "link": "",
+      "summary": "The US boycotted the G20 summit in Johannesburg over widely discredited claims of persecution of the white minority.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:03.366035+00:00"
+    },
+    {
+      "title": "Asahi says 1.5 million customers' data potentially leaked in cyber-attack",
+      "link": "",
+      "summary": "The ransomware attack in September crippled Asahi's Japan operations and caused a drinks shortage.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:03.387666+00:00"
+    },
+    {
+      "title": "High-tech and huge robots: Inside Amazon's huge £550m UK warehouse",
+      "link": "",
+      "summary": "The new facility near Hull is the size of 11 football pitches and currently employs 2,000 people.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:03.411946+00:00"
+    },
+    {
+      "title": "US transportation secretary wants more civility in air travel. Not everyone is on board",
+      "link": "",
+      "summary": "Experts say a public service campaign is missing the mark as US airports brace for the busiest holiday season in years.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:03.431955+00:00"
+    },
+    {
+      "title": "Millions in UK to pay more in tax as chancellor says Budget is tackling cost of living",
+      "link": "",
+      "summary": "The chancellor says she is \"asking ordinary people to pay a little bit more\" as she extends the freeze on income tax bands.",
+      "date": "",
+      "category": "News",
+      "source": "https://www.bbc.com/news/business",
+      "scraped_at": "2025-11-29T19:19:03.448446+00:00"
+    },
+    {
+      "title": "Silver hit record highs in 2025 – here's why the 'Devil's metal has further to run",
+      "link": "https://www.cnbc.com/2025/11/29/silver-hit-record-highs-in-2025-and-still-has-further-to-run.html",
+      "summary": "Got a confidential news tip? We want to hear from you.",
+      "date": "",
+      "category": "2025",
+      "source": "https://www.cnbc.com/world/",
+      "scraped_at": "2025-11-29T19:19:10.428541+00:00"
+    },
+    {
+      "title": "Pro News and Analysis",
+      "link": "https://www.cnbc.com/pro/news/",
+      "summary": "Got a confidential news tip? We want to hear from you.",
+      "date": "",
+      "category": "Pro",
+      "source": "https://www.cnbc.com/world/",
+      "scraped_at": "2025-11-29T19:19:10.437227+00:00"
+    },
+    {
+      "title": "Latest Market News",
+      "link": "https://www.cnbc.com/stocks/",
+      "summary": "Got a confidential news tip? We want to hear from you.",
+      "date": "",
+      "category": "",
+      "source": "https://www.cnbc.com/world/",
+      "scraped_at": "2025-11-29T19:19:10.448528+00:00"
+    },
+    {
+      "title": "Special Reports",
+      "link": "",
+      "summary": "Got a confidential news tip? We want to hear from you.",
+      "date": "",
+      "category": "",
+      "source": "https://www.cnbc.com/world/",
+      "scraped_at": "2025-11-29T19:19:10.457819+00:00"
+    },
+    {
+      "title": "Health & Science",
+      "link": "https://www.cnbc.com/health-and-science/",
+      "summary": "",
+      "date": "",
+      "category": "",
+      "source": "https://www.cnbc.com/world/",
+      "scraped_at": "2025-11-29T19:19:11.791662+00:00"
+    }
+  ]
+}

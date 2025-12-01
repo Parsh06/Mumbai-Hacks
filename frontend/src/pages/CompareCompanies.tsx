@@ -7,10 +7,6 @@ import {
   type CompanyRecord,
 } from "@/services/companyDataService";
 import {
-  fetchInvestmentAnalysis,
-  type InvestmentAnalysisRequest,
-} from "@/services/investmentAnalysisService";
-import {
   LineChart,
   Line,
   BarChart,
@@ -22,7 +18,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { ChevronDown, Sparkles, Loader2 } from "lucide-react";
+import { ChevronDown, Sparkles } from "lucide-react";
 
 type KeyMetric = {
   label: string;
@@ -131,9 +127,6 @@ export default function CompareCompanies() {
   const [rightOpen, setRightOpen] = useState(false);
   const [showComparison, setShowComparison] = useState(false);
   const [chartMode, setChartMode] = useState<ChartConfig["id"]>("sales-profit");
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [analysisVerdict, setAnalysisVerdict] = useState<string | null>(null);
-  const [analysisError, setAnalysisError] = useState<string | null>(null);
 
   const options = useMemo(
     () =>
@@ -179,101 +172,14 @@ export default function CompareCompanies() {
   const handleShow = () => {
     if (leftTicker && rightTicker && leftTicker !== rightTicker) {
       setShowComparison(true);
-      setAnalysisVerdict(null);
-      setAnalysisError(null);
     } else {
       setShowComparison(false);
     }
   };
 
-  const handleInvestmentAnalysis = async () => {
-    if (!leftCompany || !rightCompany) return;
-
-    setIsAnalyzing(true);
-    setAnalysisError(null);
-    setAnalysisVerdict(null);
-
-    try {
-      // Build comparison metrics data
-      const comparisonMetrics = KEY_METRICS.map((m) => ({
-        label: m.label,
-        metric: m.metric,
-        companyAValue: getMetricValue(leftCompany, m.metric),
-        companyBValue: getMetricValue(rightCompany, m.metric),
-      }));
-
-      // Build chart data
-      const leftQuarterlyData = buildQuarterlyChartData(
-        leftCompany?.tables?.["Quarterly Results"]
-      );
-      const rightQuarterlyData = buildQuarterlyChartData(
-        rightCompany?.tables?.["Quarterly Results"]
-      );
-      const allQuarters = Array.from(
-        new Set([
-          ...leftQuarterlyData.map((d) => d.quarter),
-          ...rightQuarterlyData.map((d) => d.quarter),
-        ])
-      ).sort();
-      const salesProfitTrends = allQuarters.map((q) => {
-        const left = leftQuarterlyData.find((d) => d.quarter === q);
-        const right = rightQuarterlyData.find((d) => d.quarter === q);
-        return {
-          quarter: q,
-          [`${leftCompany.company_code} Sales`]: left?.sales ?? null,
-          [`${leftCompany.company_code} Net Profit`]: left?.netProfit ?? null,
-          [`${rightCompany.company_code} Sales`]: right?.sales ?? null,
-          [`${rightCompany.company_code} Net Profit`]: right?.netProfit ?? null,
-        };
-      });
-
-      const profitabilityComparison = CHART_CONFIGS.find(
-        (c) => c.id === "profitability"
-      )?.metrics?.map((m) => {
-        const leftRaw = getMetricValue(leftCompany, m.metric) ?? undefined;
-        const rightRaw = getMetricValue(rightCompany, m.metric) ?? undefined;
-        const parser = m.type === "percent" ? parsePercent : parseNumber;
-        return {
-          metric: m.label,
-          left: parser(leftRaw as string) ?? 0,
-          right: parser(rightRaw as string) ?? 0,
-        };
-      }) ?? [];
-
-      const valuationRatios = CHART_CONFIGS.find((c) => c.id === "valuation")
-        ?.metrics?.map((m) => {
-          const leftRaw = getMetricValue(leftCompany, m.metric) ?? undefined;
-          const rightRaw = getMetricValue(rightCompany, m.metric) ?? undefined;
-          const parser = m.type === "percent" ? parsePercent : parseNumber;
-          return {
-            metric: m.label,
-            left: parser(leftRaw as string) ?? 0,
-            right: parser(rightRaw as string) ?? 0,
-          };
-        }) ?? [];
-
-      const request: InvestmentAnalysisRequest = {
-        companyA: leftCompany,
-        companyB: rightCompany,
-        comparisonData: {
-          metrics: comparisonMetrics,
-        },
-        chartData: {
-          salesProfitTrends,
-          profitabilityComparison,
-          valuationRatios,
-        },
-      };
-
-      const response = await fetchInvestmentAnalysis(request);
-      setAnalysisVerdict(response.verdict);
-    } catch (error) {
-      setAnalysisError(
-        error instanceof Error ? error.message : "Failed to generate analysis"
-      );
-    } finally {
-      setIsAnalyzing(false);
-    }
+  const handleInvestmentAnalysis = () => {
+    // Button is kept but does nothing
+    return;
   };
 
   if (isLoading) {
@@ -630,55 +536,13 @@ export default function CompareCompanies() {
           <div className="flex justify-center">
             <Button
               onClick={handleInvestmentAnalysis}
-              disabled={isAnalyzing}
-              className="brutal-button bg-gradient-to-r from-primary via-secondary to-accent text-primary-foreground hover:opacity-90 transition-opacity px-8 py-6 text-lg font-bold"
+              disabled
+              className="brutal-button bg-gradient-to-r from-primary via-secondary to-accent text-primary-foreground opacity-60 cursor-not-allowed px-8 py-6 text-lg font-bold"
             >
-              {isAnalyzing ? (
-                <>
-                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                  Analyzing...
-                </>
-              ) : (
-                <>
-                  <Sparkles className="w-5 h-5 mr-2" />
-                  Analysis for Investments
-                </>
-              )}
+              <Sparkles className="w-5 h-5 mr-2" />
+              Analysis for Investments
             </Button>
           </div>
-
-          {/* AI Investment Verdict */}
-          {analysisVerdict && (
-            <div className="brutal-card-lg p-8 bg-gradient-to-br from-card via-primary/5 to-secondary/5 border-2 border-primary/20 space-y-6">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-display font-bold">
-                  AI Investment Verdict
-                </h2>
-                <p className="text-sm uppercase tracking-[0.3em] text-muted-foreground font-semibold">
-                  Powered by Gemini
-                </p>
-              </div>
-              <div className="prose prose-invert max-w-none">
-                <div className="text-base leading-relaxed space-y-4 whitespace-pre-wrap">
-                  {analysisVerdict.split("\n\n").map((paragraph, idx) => (
-                    <p key={idx} className="text-foreground font-medium">
-                      {paragraph.trim()}
-                    </p>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Error State */}
-          {analysisError && (
-            <div className="brutal-card-lg p-6 bg-destructive/10 border-2 border-destructive/30">
-              <p className="text-lg font-bold text-destructive mb-2">
-                Analysis Error
-              </p>
-              <p className="text-muted-foreground">{analysisError}</p>
-            </div>
-          )}
         </div>
       )}
     </div>
