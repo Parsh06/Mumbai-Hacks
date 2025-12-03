@@ -24,6 +24,7 @@ export default function Layout({ children }: LayoutProps) {
     { to: "/companies", label: "Companies" },
     { to: "/compare", label: "Compare" },
     { to: "/news", label: "Top News" },
+    { to: "/ipo", label: "IPO" },
   ];
 
   return (

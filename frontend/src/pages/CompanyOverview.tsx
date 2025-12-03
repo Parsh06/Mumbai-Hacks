@@ -200,6 +200,22 @@ const computeFactorScores = (company: CompanyRecord | undefined) => {
   const roe = parsePercent(getRatioValue(company, "ROE"));
   const roce = parsePercent(getRatioValue(company, "ROCE"));
 
+  // Calculate revenue CAGR from annual P&L data if available
+  let revenueCagr3Y: number | null = null;
+  const annualPnlData = buildAnnualPnlChartData(company.tables?.["Profit and Loss"]);
+  if (annualPnlData && annualPnlData.length >= 3) {
+    const recent = annualPnlData.slice(-3);
+    const first = recent[0];
+    const last = recent[recent.length - 1];
+    if (first.sales && last.sales && first.sales !== 0) {
+      const years = recent.length - 1 || 1;
+      const cagr = Math.pow(last.sales / first.sales, 1 / years) - 1;
+      if (Number.isFinite(cagr)) {
+        revenueCagr3Y = cagr;
+      }
+    }
+  }
+
   let value = 50;
   if (pe !== null) {
     if (pe < 15) value += 20;

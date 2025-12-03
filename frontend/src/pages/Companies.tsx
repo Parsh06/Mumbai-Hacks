@@ -277,15 +277,23 @@ export default function Companies() {
                 onClick={() => handleRowClick(company.company_code)}
               >
                 <td className="py-3 pr-4 font-semibold">
-                  <span className="text-primary underline decoration-dotted">
+                  <Link
+                    to={`/company/${company.company_code}`}
+                    onClick={(e) => e.stopPropagation()}
+                    className="text-primary hover:underline decoration-dotted"
+                  >
                     {company.company_code}
-                  </span>
+                  </Link>
                 </td>
                 <td className="py-3 pr-4">
-                  <p className="font-semibold">
+                  <Link
+                    to={`/company/${company.company_code}`}
+                    onClick={(e) => e.stopPropagation()}
+                    className="font-semibold text-primary hover:underline decoration-dotted block"
+                  >
                     {company.name || company.company_code}
-                  </p>
-                  <p className="text-xs text-muted-foreground line-clamp-2">
+                  </Link>
+                  <p className="text-xs text-muted-foreground line-clamp-2 mt-1">
                     {company.about || "—"}
                   </p>
                 </td>
