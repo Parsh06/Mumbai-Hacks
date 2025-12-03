@@ -127,6 +127,49 @@ const getCompanyName = (ipo: IPORecord): string => {
   return "Unknown Company";
 };
 
+const getIPOUniqueKey = (ipo: IPORecord): string => {
+  // Create a unique key using multiple fields to ensure uniqueness
+  // even when some fields are missing
+  const companyName = getCompanyName(ipo);
+  const openingDate = ipo["Opening Date"] || "";
+  const closingDate = ipo["Closing Date"] || "";
+  const listingDate = ipo["Listing Date"] || "";
+  const issuePrice = ipo["Issue Price (Rs.)"] || "";
+  const totalAmount = ipo["Total Issue Amount (Incl.Firm reservations) (Rs.cr.)"] || "";
+  const listingAt = ipo["Listing at"] || "";
+  const leadManager = ipo["Lead Manager"] || "";
+  
+  // Combine all available fields to create a composite key
+  const keyParts = [
+    companyName,
+    openingDate,
+    closingDate,
+    listingDate,
+    issuePrice,
+    totalAmount,
+    listingAt,
+    leadManager
+  ].filter(part => part.length > 0); // Only include non-empty parts
+  
+  // Create a stable unique identifier from all parts
+  let uniqueKey = keyParts.join("_").replace(/[^a-zA-Z0-9_]/g, "_");
+  
+  // If we only have company name (all other fields empty), create a hash
+  // from the entire record to ensure uniqueness
+  if (keyParts.length === 1) {
+    // Create a simple hash from all record values
+    const allValues = Object.values(ipo).join("|");
+    // Simple hash function (djb2 algorithm)
+    let hash = 5381;
+    for (let i = 0; i < allValues.length; i++) {
+      hash = ((hash << 5) + hash) + allValues.charCodeAt(i);
+    }
+    uniqueKey = `${companyName}_${Math.abs(hash).toString(36)}`.replace(/[^a-zA-Z0-9_]/g, "_");
+  }
+  
+  return uniqueKey;
+};
+
 export default function IPO() {
   const [ipoType, setIpoType] = useState<"mainboard" | "sme">("mainboard");
   const [mainboardData, setMainboardData] = useState<IPOData | null>(null);
@@ -340,13 +383,14 @@ export default function IPO() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {sortedIPOs.map((ipo, idx) => {
+          {sortedIPOs.map((ipo) => {
             const status = getIPOStatus(ipo);
             const companyName = getCompanyName(ipo);
+            const uniqueKey = getIPOUniqueKey(ipo);
             
             return (
               <div
-                key={idx}
+                key={uniqueKey}
                 className="brutal-card-lg p-6 bg-card border-3 border-border shadow-[var(--shadow-brutal)] hover:shadow-[var(--shadow-brutal-lg)] transition-shadow space-y-5"
               >
                 {/* Header with Status Badge */}
